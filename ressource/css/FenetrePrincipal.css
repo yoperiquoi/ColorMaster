@@ -1,0 +1,5 @@
+.Vbox{
+    -fx-background-color: grey;
+    -fx-padding: 5px;
+    -fx-max-width: 90px ;
+}
