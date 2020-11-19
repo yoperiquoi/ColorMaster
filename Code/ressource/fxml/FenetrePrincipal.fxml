@@ -11,7 +11,7 @@
     <GridPane.columnSpan/>
     <GridPane.columnSpan/>
 
-    <VBox GridPane.columnIndex="1" maxWidth="90">
+    <VBox GridPane.columnIndex="1" fx:id="vbox">
         <ToggleButton  text="Dessin" fx:id="dessinBtn"/>
         <ToggleButton text="Effacer" fx:id="effacerBtn"/>
         <ToggleButton text="Ligne" fx:id="ligneBtn"/>
@@ -23,7 +23,7 @@
         <Label text="Couleur ligne"/>
         <ColorPicker minWidth="90" fx:id="selectionCouleur"/>
         <Label text="Couleur remplissage"/>
-        <ColorPicker minWidth="90"/>
+        <ColorPicker minWidth="90" fx:id="selectionRempl"/>
         <Label text="1.0" fx:id="labelSlider"/>
         <Slider showTickLabels="true" fx:id="slider" showTickMarks="true"/>
         <Button text="Undo" fx:id="undoBtn"/>
