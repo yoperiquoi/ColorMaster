@@ -1,3 +1,11 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+<<<<<<< Updated upstream
+=======
+# Datasource local storage ignored files
+/../../../../../../../../:\Users\Yoann\Desktop\DUT INFO\Projet2A\projet10_jfx_2020_2021\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+>>>>>>> Stashed changes

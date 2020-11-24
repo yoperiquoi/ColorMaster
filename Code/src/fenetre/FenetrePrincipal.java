@@ -34,7 +34,7 @@ public class FenetrePrincipal {
     @FXML
     private ToggleButton textBtn;
 
-    ToggleButton[] tableauOutils;
+    ToggleButton[] tableauOutils= new ToggleButton[7];
 
     ToggleGroup outils = new ToggleGroup();
 
@@ -61,7 +61,7 @@ public class FenetrePrincipal {
     @FXML
     private Button openBtn;
 
-    Button[] tableauBtn;
+    Button[] tableauBtn=new Button[4];
 
     @FXML
     private Canvas canvas;
