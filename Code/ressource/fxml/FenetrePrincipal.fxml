@@ -21,9 +21,9 @@
         <ToggleButton text="Ellipse" fx:id="ellipseBtn"/>
         <ToggleButton text="Text" fx:id="textBtn"/>
         <TextArea fx:id="textArea"/>
-        <Label text="Couleur ligne"/>
+        <Label text="Couleur ligne" fx:id="couleurLigne"/>
         <ColorPicker minWidth="90" fx:id="selectionCouleur"/>
-        <Label text="Couleur remplissage"/>
+        <Label text="Couleur remplissage" fx:id="couleurRempl"/>
         <ColorPicker minWidth="90" fx:id="selectionRempl"/>
         <Label text="1.0" fx:id="labelSlider"/>
         <Slider showTickLabels="true" fx:id="slider" showTickMarks="true"/>

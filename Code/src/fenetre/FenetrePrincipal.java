@@ -53,6 +53,10 @@ public class FenetrePrincipal {
 
     @FXML
     private Label labelSlider;
+    @FXML
+    private Label couleurLigne;
+    @FXML
+    private Label couleurRempl;
 
     @FXML
     private Button undoBtn;
@@ -96,21 +100,46 @@ public class FenetrePrincipal {
         for (Button outil :tableauBtn){
             outil.setMinWidth(90);
             outil.setCursor(Cursor.HAND);
-            outil.setTextFill(Color.WHITE);
-            outil.setStyle("fx-background : #275DAD");
+            outil.setTextFill(Color.BLACK);
+            outil.setStyle("fx-background : #333");
         }
 
-        saveBtn.setStyle("fx-background : #275DAD");
-        openBtn.setStyle("fx-background : #275DAD");
+        saveBtn.setStyle("fx-background : #333");
+        openBtn.setStyle("fx-background : #333");
 
         vbox.setPadding(new Insets(5));
-        vbox.setStyle("fx-background : #333");
+        vbox.setStyle("fx-background : #666");
+        vbox.setSpacing(10);
         vbox.setPrefWidth(100);
 
         canvas.setWidth(1080);
         canvas.setHeight(720);
+
         GraphicsContext gc;
         gc=canvas.getGraphicsContext2D();
         gc.setLineWidth(1);
+
+        selectionCouleur.setOnAction(e->{
+            gc.setStroke(selectionCouleur.getValue());
+        });
+
+        selectionRempl.setOnAction(e->{
+            gc.setStroke(selectionRempl.getValue());
+        });
+
+        canvas.setOnMousePressed(e->{
+            if(dessinBtn.isSelected()){
+                gc.setStroke(selectionCouleur.getValue());
+                gc.beginPath();
+                gc.lineTo(e.getX(),e.getY());
+            }
+            else if(effacerBtn.isSelected()){
+                double largeur=gc.getLineWidth();
+                gc.clearRect(e.getX()-largeur/2,e.getY()-largeur/2,largeur,largeur);
+            }
+
+        });
     }
+
+
 }
