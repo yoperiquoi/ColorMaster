@@ -26,6 +26,8 @@ public class FenetrePrincipal {
     @FXML
     private ToggleButton ligneBtn;
     @FXML
+    private ToggleButton carreBtn;
+    @FXML
     private ToggleButton rectangleBtn;
     @FXML
     private ToggleButton cercleBtn;
@@ -34,7 +36,7 @@ public class FenetrePrincipal {
     @FXML
     private ToggleButton textBtn;
 
-    ToggleButton[] tableauOutils= new ToggleButton[7];
+    ToggleButton[] tableauOutils= new ToggleButton[8];
 
     ToggleGroup outils = new ToggleGroup();
 
@@ -75,10 +77,11 @@ public class FenetrePrincipal {
         tableauOutils[0]= dessinBtn;
         tableauOutils[1]= effacerBtn;
         tableauOutils[2]= ligneBtn;
-        tableauOutils[3]= rectangleBtn;
-        tableauOutils[4]= cercleBtn;
-        tableauOutils[5]= ellipseBtn;
-        tableauOutils[6]= textBtn;
+        tableauOutils[3]= carreBtn;
+        tableauOutils[4]= rectangleBtn;
+        tableauOutils[5]= cercleBtn;
+        tableauOutils[6]= ellipseBtn;
+        tableauOutils[7]= textBtn;
 
         for(ToggleButton outil: tableauOutils){
             outil.setMinWidth(90);

@@ -15,6 +15,7 @@
         <ToggleButton  text="Dessin" fx:id="dessinBtn"/>
         <ToggleButton text="Effacer" fx:id="effacerBtn"/>
         <ToggleButton text="Ligne" fx:id="ligneBtn"/>
+        <ToggleButton text="Carré" fx:id="carreBtn"/>
         <ToggleButton text="Rectangle" fx:id="rectangleBtn"/>
         <ToggleButton text="Cercle" fx:id="cercleBtn"/>
         <ToggleButton text="Ellipse" fx:id="ellipseBtn"/>
