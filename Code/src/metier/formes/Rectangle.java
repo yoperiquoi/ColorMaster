@@ -13,6 +13,10 @@ public class Rectangle extends Forme{
         setY(y);
     }
 
+    public Rectangle() {
+
+    }
+
     public float getLargeur() {
         return largeur;
     }

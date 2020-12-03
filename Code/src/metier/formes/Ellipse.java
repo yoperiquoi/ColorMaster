@@ -13,6 +13,10 @@ public class Ellipse extends Forme{
         setDiametre2(diametre2);
     }
 
+    public Ellipse() {
+
+    }
+
     public float getDiametre1() {
         return diametre1;
     }

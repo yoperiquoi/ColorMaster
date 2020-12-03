@@ -13,6 +13,10 @@ public class Ligne extends Forme{
         setY2(y2);
     }
 
+    public Ligne(){
+
+    }
+
     public float getY2() {
         return y2;
     }

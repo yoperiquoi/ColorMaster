@@ -5,10 +5,14 @@ import javafx.scene.canvas.GraphicsContext;
 public class Carre extends Forme{
     private float cote;
 
-    public Carre(float x,float y,float cote){
+    public Carre(float x,float y){
         setX(x);
         setY(y);
         setCote(cote);
+    }
+
+    public Carre() {
+
     }
 
     public float getCote() {
