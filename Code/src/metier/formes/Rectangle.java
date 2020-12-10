@@ -1,16 +1,20 @@
 package metier.formes;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 
 public class Rectangle extends Forme{
     private float longueur;
     private float largeur;
 
-    public Rectangle(float longueur,float largeur,float x, float y) {
+    public Rectangle(float longueur, float largeur, float x, float y, boolean rempli, Color couleurRemp,Color couleur) {
         setLongueur(longueur);
         setLargeur(largeur);
         setX(x);
         setY(y);
+        setRempli(rempli);
+        setCouleur(couleur);
+        setCouleurRemplissage(couleurRemp);
     }
 
     public Rectangle() {

@@ -1,16 +1,20 @@
 package metier.formes;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Ellipse extends Forme{
     private float diametre1;
     private float diametre2;
 
-    public Ellipse(float diametre1, float diametre2, float x ,float y){
+    public Ellipse(float diametre1, float diametre2, float x , float y, boolean rempli, Color couleurRemp, Color couleur){
         setX(x);
         setY(y);
         setDiametre1(diametre1);
         setDiametre2(diametre2);
+        setRempli(rempli);
+        setCouleur(couleur);
+        setCouleurRemplissage(couleurRemp);
     }
 
     public Ellipse() {

@@ -9,6 +9,7 @@ public abstract class Forme {
     private Color couleur = Color.BLACK;
     private Color couleurRemplissage= Color.TRANSPARENT;
     private Boolean rempli=false;
+    private float largeurTrait;
 
     public void deplacer(float x, float y){
         setX(x);
@@ -50,4 +51,8 @@ public abstract class Forme {
     public Color getCouleurRemplissage() { return couleurRemplissage; }
 
     public void setCouleurRemplissage(Color couleurRemplissage){this.couleurRemplissage=couleurRemplissage;}
+
+    public float getLargeurTrait() {return largeurTrait;}
+
+    public void setLargeurTrait(float largeurTrait) {this.largeurTrait = largeurTrait;}
 }

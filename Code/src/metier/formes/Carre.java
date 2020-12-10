@@ -1,14 +1,18 @@
 package metier.formes;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Carre extends Forme{
     private float cote;
 
-    public Carre(float x,float y){
+    public Carre(float x, float y, float cote, boolean rempli, Color couleurRemp, Color couleur){
         setX(x);
         setY(y);
         setCote(cote);
+        setRempli(rempli);
+        setCouleur(couleur);
+        setCouleurRemplissage(couleurRemp);
     }
 
     public Carre() {

@@ -1,6 +1,7 @@
 package metier.formes;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Cercle extends Forme{
     private float rayon;
@@ -9,10 +10,13 @@ public class Cercle extends Forme{
     private float centreY;
 
 
-    public Cercle(float rayon,float x, float y){
+    public Cercle(float rayon, float x, float y, boolean rempli, Color couleurRemp, Color couleur){
         setRayon(rayon);
         setX(x);
         setY(y);
+        setRempli(rempli);
+        setCouleur(couleur);
+        setCouleurRemplissage(couleurRemp);
     }
 
     public Cercle() {

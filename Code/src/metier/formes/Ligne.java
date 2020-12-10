@@ -1,16 +1,18 @@
 package metier.formes;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Ligne extends Forme{
     private float y2;
     private float x2;
 
-    public Ligne(float x,float y,float x2,float y2){
+    public Ligne(float x, float y, float x2, float y2, Color couleur){
         setX(x);
         setY(y);
         setX2(x2);
         setY2(y2);
+        setCouleur(couleur);
     }
 
     public Ligne(){
