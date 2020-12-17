@@ -74,6 +74,7 @@ public class FenetrePrincipal {
 
     @FXML
     private Canvas canvas;
+    private Dessinateur dessinateurSelectionne;
 
     public void initialize(){
 
@@ -133,7 +134,6 @@ public class FenetrePrincipal {
         DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
         DessinateurLigne dessinateurLigne = new DessinateurLigne();
         DessinateurText dessinateurText = new DessinateurText();
-        Dessinateur dessinateur= new Dessinateur();
 
         ligneBtn.setUserData(dessinateurLigne);
         carreBtn.setUserData(dessinateurCarre);
@@ -141,6 +141,8 @@ public class FenetrePrincipal {
         cercleBtn.setUserData(dessinateurCercle);
         ellipseBtn.setUserData(dessinateurEllipse);
         textBtn.setUserData(dessinateurText);
+
+        DessinateurManager dessinateurManager= new DessinateurManager();
 
         selectionCouleur.setOnAction(e->{
             gc.setStroke(selectionCouleur.getValue());
@@ -150,64 +152,23 @@ public class FenetrePrincipal {
             gc.setStroke(selectionRempl.getValue());
         });
 
-        canvas.setOnMousePressed(e-> {
-            if (dessinBtn.isSelected()) {
-                gc.setStroke(selectionCouleur.getValue());
-                gc.beginPath();
-            } else if (effacerBtn.isSelected()) {
-                double largeur = gc.getLineWidth();
-                gc.clearRect(e.getX() - largeur / 2, e.getY() - largeur / 2, largeur, largeur);
-            } else if (textBtn.isSelected()) {
-                dessinateurText.definirFormeOnMousePressed(slider,e,gc,selectionCouleur.getValue(),selectionRempl.getValue());
-                dessinateurText.dessiner(gc,textArea);
-                historiqueUndo.push(dessinateurText.getForme());
-            }else{
-                ((Dessinateur) ((ToggleButton) e.getSource()).getUserData()).definirFormeOnMousePressed(e, gc, selectionCouleur.getValue(), selectionRempl.getValue());
-            }
 
+        canvas.setOnMousePressed(e-> {
+            dessinateurManager.definirDebutFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
         });
 
 
         canvas.setOnMouseDragged(e->{
-            if(dessinBtn.isSelected()){
-                gc.lineTo(e.getX(),e.getY());
-                gc.stroke();
-            }else if(effacerBtn.isSelected()) {
-                double largueurLigne = gc.getLineWidth();
-                gc.clearRect(e.getX() - largueurLigne / 2, e.getY() - largueurLigne / 2, largueurLigne, largueurLigne);
-            }
+            dessinateurManager.definirPendantFigure(dessinBtn,effacerBtn,e,gc);
         });
 
         canvas.setOnMouseReleased(e->{
-            if(dessinBtn.isSelected()){
-                gc.lineTo(e.getX(),e.getY());
-                gc.stroke();
-                gc.closePath();
-            }else if(effacerBtn.isSelected()){
-                double largueurLigne = gc.getLineWidth();
-                gc.clearRect(e.getX() - largueurLigne / 2, e.getY() - largueurLigne / 2, largueurLigne, largueurLigne);
-            }else if(ligneBtn.isSelected()){
-                dessinateurLigne.definirFormeOnMouseReleased(e);
-                dessinateurLigne.dessiner(gc);
-                historiqueUndo.push(dessinateurLigne.getForme());
-            }else if(rectangleBtn.isSelected()){
-                dessinateurRectangle.definirFormeOnMouseReleased(e);
-                dessinateurRectangle.dessiner(gc);
-                historiqueUndo.push(dessinateurRectangle.getForme());
-            }else if(cercleBtn.isSelected()){
-                dessinateurCercle.definirFormeOnMouseReleased(e);
-                dessinateurCercle.dessiner(gc);
-                historiqueUndo.push(dessinateurCercle.getForme());
-            }else if(ellipseBtn.isSelected()){
-                dessinateurEllipse.definirFormeOnMouseReleased(e);
-                dessinateurEllipse.dessiner(gc);
-                historiqueUndo.push(dessinateurEllipse.getForme());
-            }else if(carreBtn.isSelected()){
-                dessinateurCarre.definirFormeOnMouseReleased(e);
-                dessinateurCarre.dessiner(gc);
-                historiqueUndo.push(dessinateurCarre.getForme());
-            }
+            dessinateurManager.definirFinFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
         });
+
+        //Ne marche pas correctement :
+        //Cercle, Text et carre moyen
+
 
         slider.valueProperty().addListener(e->{
             float largeur= (float)slider.getValue();

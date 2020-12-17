@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 import metier.formes.Forme;
 import metier.formes.Text;
 
-public class DessinateurText {
+public class DessinateurText extends Dessinateur{
     private Text text = new Text();
 
     public void dessiner(GraphicsContext gc,TextArea textArea) {
