@@ -74,7 +74,6 @@ public class FenetrePrincipal {
 
     @FXML
     private Canvas canvas;
-    private Dessinateur dessinateurSelectionne;
 
     public void initialize(){
 
@@ -164,6 +163,7 @@ public class FenetrePrincipal {
 
         canvas.setOnMouseReleased(e->{
             dessinateurManager.definirFinFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
+            System.out.println(historiqueUndo);
         });
 
         //Ne marche pas correctement :
@@ -181,75 +181,11 @@ public class FenetrePrincipal {
         });
 
         undoBtn.setOnAction(e->{
-            gc.clearRect(0,0,1080,720);
-            if(!historiqueUndo.empty()){
-                Forme formeSupprimee= historiqueUndo.lastElement();
-                if(formeSupprimee.getClass() == Ligne.class){
-                    Ligne ligneTemp = (Ligne)formeSupprimee;
-                    historiqueRedo.push(ligneTemp);
-                }
-                if(formeSupprimee.getClass() == Cercle.class){
-                    Cercle cercleTemp = (Cercle) formeSupprimee;
-                    historiqueRedo.push(cercleTemp);
-                }
-                if(formeSupprimee.getClass() == Carre.class){
-                    Carre carreTemp = (Carre)formeSupprimee;
-                    historiqueRedo.push(carreTemp);
-                }
-                if(formeSupprimee.getClass() == Rectangle.class){
-                    Rectangle rectangleTemp = (Rectangle)formeSupprimee;
-                    historiqueRedo.push(rectangleTemp);
-                }
-                if(formeSupprimee.getClass() == Text.class){
-                    Text textTemp = (Text)formeSupprimee;
-                    historiqueRedo.push(textTemp);
-                }
-                if(formeSupprimee.getClass() == Ellipse.class){
-                    Ellipse ellipseTemp = (Ellipse)formeSupprimee;
-                    historiqueRedo.push(ellipseTemp);
-                }
+            dessinateurManager.undo(gc);
+        });
 
-                for(int i=0; i<historiqueUndo.size();i++){
-                    Forme forme = historiqueUndo.elementAt(i);
-                    if(forme.getClass() == Ligne.class){
-                        Ligne ligneTemp = (Ligne)forme;
-                        gc.setLineWidth(ligneTemp.getLargeurTrait());
-                        gc.setStroke(ligneTemp.getCouleur());
-                        gc.setFill(ligneTemp.getCouleurRemplissage());
-                        gc.strokeLine(ligneTemp.getX(),ligneTemp.getY(),ligneTemp.getX2(), ligneTemp.getY2());
-                    }
-                    if(forme.getClass() == Cercle.class){
-                        Cercle cercleTemp = (Cercle) forme;
-                        gc.setLineWidth(cercleTemp.getLargeurTrait());
-                        gc.setStroke(cercleTemp.getCouleur());
-                        gc.setFill(cercleTemp.getCouleurRemplissage());
-                        gc.strokeOval(cercleTemp.getX(), cercleTemp.getY(), cercleTemp.getRayon(),cercleTemp.getRayon());
-                    }
-                    if(forme.getClass() == Carre.class){
-                        Carre carreTemp = (Carre)forme;
-                        gc.setLineWidth(carreTemp.getLargeurTrait());
-                        gc.setStroke(carreTemp.getCouleur());
-                        gc.setFill(carreTemp.getCouleurRemplissage());
-                        gc.strokeRect(carreTemp.getX(),carreTemp.getY(),carreTemp.getCote(),carreTemp.getCote());
-                    }
-                    if(forme.getClass() == Rectangle.class){
-                        Rectangle rectangleTemp = (Rectangle)forme;
-                        gc.setLineWidth(rectangleTemp.getLargeurTrait());
-                        gc.setStroke(rectangleTemp.getCouleur());
-                        gc.setFill(rectangleTemp.getCouleurRemplissage());
-                        gc.strokeRect(rectangleTemp.getX(),rectangleTemp.getY(),rectangleTemp.getLargeur(),rectangleTemp.getLongueur());
-                    }
-                    if(forme.getClass() == Text.class){
-                        Text textTemp = (Text)forme;
-
-                    }
-                    if(forme.getClass() == Ellipse.class){
-                        Ellipse ellipseTemp = (Ellipse)forme;
-                    }
-                }
-            }else{
-                System.err.println("Aucune retour possible !");
-            }
+        redoBtn.setOnAction(e->{
+            dessinateurManager.redo(gc);
         });
 
 
