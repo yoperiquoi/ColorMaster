@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ligne extends Forme{
+    private String type = "Ligne";
     private float y2;
     private float x2;
 
@@ -33,5 +34,14 @@ public class Ligne extends Forme{
 
     public void setX2(float x2) {
         this.x2 = x2;
+    }
+
+    @Override
+    public String toString() {
+        return "Ligne{" +
+                "type='" + type + '\'' +
+                ", y2=" + y2 +
+                ", x2=" + x2 +
+                '}';
     }
 }

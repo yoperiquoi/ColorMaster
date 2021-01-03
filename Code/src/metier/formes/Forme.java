@@ -3,6 +3,8 @@ package metier.formes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Type;
+
 public abstract class Forme {
     private float x;
     private float y;

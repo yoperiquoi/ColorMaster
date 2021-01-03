@@ -188,8 +188,13 @@ public class FenetrePrincipal {
             dessinateurManager.redo(gc);
         });
 
+        saveBtn.setOnAction(e->{
+            dessinateurManager.sauvegarder(gc,canvas,e);
+        });
 
-
+        openBtn.setOnAction(e->{
+            dessinateurManager.charger(gc,e);
+        });
 
     }
 }

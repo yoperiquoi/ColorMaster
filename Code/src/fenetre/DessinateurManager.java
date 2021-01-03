@@ -1,16 +1,34 @@
 package fenetre;
 
-import com.sun.javafx.geom.Path2D;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import metier.formes.*;
-
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.RenderedImage;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Stack;
 
 public class DessinateurManager {
@@ -155,17 +173,98 @@ public class DessinateurManager {
     }
 
     public void redo(GraphicsContext gc) {
+
     }
 
-    /*
-    public DessinateurManager(){
+    public void charger(GraphicsContext gc){
 
-        slider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                eppaisseurTrait.setValue(slider.getValue());
+    }
+
+    public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event){
+        FileChooser savefile = new FileChooser();
+        savefile.setTitle("Save File");
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        File file = savefile.showSaveDialog(stage);
+        if (file != null) {
+            try {
+                //Sauvegarde de l'image
+                WritableImage writableImage = new WritableImage(1080, 790);
+                canvas.snapshot(null, writableImage);
+                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                ImageIO.write(renderedImage, "png", file);
+
+                //Sauvegarde de l'historique redo et undo
+                GsonBuilder builder= new GsonBuilder();
+                Gson gson = builder.setPrettyPrinting().create();
+                System.out.println(undoHistorique);
+                String undo = gson.toJson(undoHistorique);
+                String redo = gson.toJson(redoHistorique);
+                String path1 = file.getAbsolutePath() + "Undo.json";
+                String path2 = file.getAbsolutePath() + "Redo.json";
+                try(FileWriter writer = new FileWriter(path1);
+                    BufferedWriter bw = new BufferedWriter(writer)){
+                        bw.write(undo);
+                }catch (IOException ex){
+                    System.out.println("Error!");
+                }
+                try(FileWriter writer = new FileWriter(path2);
+                    BufferedWriter bw = new BufferedWriter(writer)){
+                    bw.write(redo);
+                }catch (IOException ex){
+                    System.out.println("Error!");
+                }
+            } catch (IOException ex) {
+                System.out.println("Error!");
             }
-        });
+        }
     }
-    */
+
+    public void charger(GraphicsContext gc, Event event){
+        FileChooser openFile = new FileChooser();
+        openFile.setTitle("Open File");
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        File file = openFile.showOpenDialog(stage);
+        if (file != null) {
+            try {
+                //Récupére l'image
+                InputStream io = new FileInputStream(file);
+                Image img = new Image(io);
+                gc.drawImage(img, 0, 0);
+
+                //Récupére les historiques
+                FormeDeserializer deserializer= new FormeDeserializer("type");
+                deserializer.registerShapeType("Carre",Carre.class);
+                deserializer.registerShapeType("Cercle",Cercle.class);
+                deserializer.registerShapeType("Dessin",Dessin.class);
+                deserializer.registerShapeType("Effacement",Effacement.class);
+                deserializer.registerShapeType("Ellipse",Ellipse.class);
+                deserializer.registerShapeType("Ligne",Ligne.class);
+                deserializer.registerShapeType("Rectangle",Rectangle.class);
+                deserializer.registerShapeType("Text",Text.class);
+
+                Gson gson = new GsonBuilder().registerTypeAdapter(Forme.class,deserializer).create();
+
+                String path = file.getAbsolutePath() + "Undo.json";
+
+                List<Forme> undo;
+                undo = gson.fromJson(new FileReader(path),new TypeToken<Stack<Forme>>(){}.getType());
+                undoHistorique.clear();
+                undoHistorique.addAll(undo);
+                System.out.println(undoHistorique);
+
+                path = file.getAbsolutePath() + "Redo.json";
+
+                List<Forme> redo;
+                redo = gson.fromJson(new FileReader(path),new TypeToken<Stack<Forme>>(){}.getType());
+                redoHistorique.clear();
+                redoHistorique.addAll(redo);
+                System.out.println(redoHistorique);
+
+            } catch (IOException ex) {
+                System.out.println("Error!");
+            }
+        }
+    }
+
 }

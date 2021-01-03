@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Dessin extends Forme{
     float largueurTrait;
+    private String type = "Dessin";
     public List<Float> pointsX = new LinkedList<Float>();
     public List<Float> pointsY = new LinkedList<Float>();
 

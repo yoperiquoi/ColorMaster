@@ -8,7 +8,7 @@ public class Cercle extends Forme{
     private float diametre=2*rayon;
     private float centreX;
     private float centreY;
-
+    private String type = "Cercle";
 
     public Cercle(float rayon, float x, float y, boolean rempli, Color couleurRemp, Color couleur){
         setRayon(rayon);

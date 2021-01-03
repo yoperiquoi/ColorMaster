@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Carre extends Forme{
     private float cote;
+    private String type = "Carre";
 
     public Carre(float x, float y, float cote, boolean rempli, Color couleurRemp, Color couleur){
         setX(x);
@@ -25,5 +26,13 @@ public class Carre extends Forme{
 
     public void setCote(float cote) {
         this.cote = cote;
+    }
+
+    @Override
+    public String toString() {
+        return "Carre{" +
+                "cote=" + cote +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
