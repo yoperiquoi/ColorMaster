@@ -32,6 +32,10 @@
         <Button text="Save" fx:id="saveBtn"/>
         <Button text="Open" fx:id="openBtn"/>
     </VBox>
-    <Canvas GridPane.columnIndex="2" fx:id="canvas"/>
+    <StackPane GridPane.columnIndex="2">
+        <Label fx:id="nomFichier"/>
+        <Canvas  fx:id="canvas"/>
+    </StackPane>
+
 
 </GridPane>

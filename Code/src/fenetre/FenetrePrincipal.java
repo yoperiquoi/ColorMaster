@@ -62,6 +62,9 @@ public class FenetrePrincipal {
     private Label couleurRempl;
 
     @FXML
+    private Label nomFichier;
+
+    @FXML
     private Button undoBtn;
     @FXML
     private Button redoBtn;
@@ -113,7 +116,7 @@ public class FenetrePrincipal {
         openBtn.setStyle("fx-background : #333");
 
         vbox.setPadding(new Insets(5));
-        vbox.setStyle("fx-background : #666");
+        vbox.setStyle("fx-background : white");
         vbox.setSpacing(10);
         vbox.setPrefWidth(100);
 
@@ -123,6 +126,8 @@ public class FenetrePrincipal {
         GraphicsContext gc;
         gc=canvas.getGraphicsContext2D();
         gc.setLineWidth(1);
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
 
         selectionCouleur.setValue(Color.BLACK);
         selectionRempl.setValue(Color.TRANSPARENT);
@@ -153,17 +158,28 @@ public class FenetrePrincipal {
 
 
         canvas.setOnMousePressed(e-> {
-            dessinateurManager.definirDebutFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
+            if(!(outils.getSelectedToggle() == null)){
+                dessinateurManager.definirDebutFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Pas d'outil sélectionné");
+                alert.setHeaderText("Pas d'outil sélectionné");
+                alert.setContentText("Selectionnez un outil avant de dessiner");
+                alert.show();
+            }
         });
 
 
         canvas.setOnMouseDragged(e->{
+            if(!(outils.getSelectedToggle() == null)){
             dessinateurManager.definirPendantFigure(dessinBtn,effacerBtn,e,gc);
+            }
         });
 
         canvas.setOnMouseReleased(e->{
-            dessinateurManager.definirFinFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
-            System.out.println(historiqueUndo);
+            if(!(outils.getSelectedToggle() == null)) {
+                dessinateurManager.definirFinFigure(e, gc, selectionCouleur.getValue(), selectionRempl.getValue(), outils, dessinBtn, effacerBtn);
+            }
         });
 
         //Ne marche pas correctement :

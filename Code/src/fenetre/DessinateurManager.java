@@ -2,17 +2,17 @@ package fenetre;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -23,11 +23,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import metier.formes.*;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.RenderedImage;
 import java.io.*;
-import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Stack;
 
@@ -38,10 +39,12 @@ public class DessinateurManager {
     Slider slider;
     Dessin dessin = new Dessin();
     Effacement effacement = new Effacement();
-    private DoubleProperty eppaisseurTrait= new SimpleDoubleProperty();
-    public final double getEppaisseurTrait(){return eppaisseurTrait.get();}
-    public final void setEppaisseurTrait(double value){eppaisseurTrait.set(value);}
-    public DoubleProperty eppaisseurTraitProperty(){return eppaisseurTrait;}
+
+    private StringProperty fileName = new SimpleStringProperty();
+        public StringProperty fileNameProperty(){return fileName;}
+        public String getFileName(){return fileName.get();}
+        public void setFileName(String valeur){ fileName.set(valeur);}
+
 
     public void definirDebutFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn){
         dessinateur =(Dessinateur) outils.getSelectedToggle().getUserData();
@@ -100,7 +103,8 @@ public class DessinateurManager {
 
     public void undo(GraphicsContext gc){
         if(!undoHistorique.empty()){
-            gc.clearRect(0,0,1080,720);
+            gc.setFill(Color.WHITE);
+            gc.fillRect(0,0, 1080,720);
             Forme formeSupprimee= undoHistorique.pop();
             if(formeSupprimee.getClass() == Ligne.class){
                 Ligne ligneTemp = (Ligne)formeSupprimee;
@@ -176,12 +180,11 @@ public class DessinateurManager {
 
     }
 
-    public void charger(GraphicsContext gc){
 
-    }
 
     public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event){
         FileChooser savefile = new FileChooser();
+        savefile.setInitialFileName(fileName.getValue());
         savefile.setTitle("Save File");
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -245,22 +248,31 @@ public class DessinateurManager {
 
                 Gson gson = new GsonBuilder().registerTypeAdapter(Forme.class,deserializer).create();
 
-                String path = file.getAbsolutePath() + "Undo.json";
+                String path1 = file.getAbsolutePath() + "Undo.json";
+                String path2 = file.getAbsolutePath() + "Redo.json";
 
-                List<Forme> undo;
-                undo = gson.fromJson(new FileReader(path),new TypeToken<Stack<Forme>>(){}.getType());
-                undoHistorique.clear();
-                undoHistorique.addAll(undo);
-                System.out.println(undoHistorique);
+                if(Files.exists(Paths.get(path1)) && Files.exists(Paths.get(path2))) {
+                    List<Forme> undo;
+                    undo = gson.fromJson(new FileReader(path1), new TypeToken<Stack<Forme>>() {
+                    }.getType());
+                    undoHistorique.clear();
+                    undoHistorique.addAll(undo);
+                    System.out.println(undoHistorique);
 
-                path = file.getAbsolutePath() + "Redo.json";
-
-                List<Forme> redo;
-                redo = gson.fromJson(new FileReader(path),new TypeToken<Stack<Forme>>(){}.getType());
-                redoHistorique.clear();
-                redoHistorique.addAll(redo);
-                System.out.println(redoHistorique);
-
+                    List<Forme> redo;
+                    redo = gson.fromJson(new FileReader(path2),new TypeToken<Stack<Forme>>(){}.getType());
+                    redoHistorique.clear();
+                    redoHistorique.addAll(redo);
+                    System.out.println(redoHistorique);
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur ouverture document");
+                    alert.setHeaderText("Les historique de undo et de redo n'ont pas pu être chargé");
+                    alert.setContentText("Un fichier de sauvegarde d'historique de undo et de redo n'a pas été trouvé.");
+                    undoHistorique= new Stack<Forme>();
+                    redoHistorique= new Stack<Forme>();
+                    alert.show();
+                }
             } catch (IOException ex) {
                 System.out.println("Error!");
             }
