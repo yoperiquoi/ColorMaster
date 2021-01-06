@@ -23,4 +23,6 @@ public class Dessinateur implements IDessine{
     public Forme getForme() {
         return forme;
     }
+
+    public void setForme(Forme forme){ this.forme=forme; }
 }

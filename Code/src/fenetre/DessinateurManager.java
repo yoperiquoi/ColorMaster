@@ -105,7 +105,7 @@ public class DessinateurManager {
         if(!undoHistorique.empty()){
             gc.setFill(Color.WHITE);
             gc.fillRect(0,0, 1080,720);
-            Forme formeSupprimee= undoHistorique.pop();
+            Forme formeSupprimee= undoHistorique.lastElement();
             if(formeSupprimee.getClass() == Ligne.class){
                 Ligne ligneTemp = (Ligne)formeSupprimee;
                 redoHistorique.push(ligneTemp);
@@ -131,43 +131,47 @@ public class DessinateurManager {
                 redoHistorique.push(ellipseTemp);
             }
 
+            undoHistorique.pop();
+
             for(int i=0; i<undoHistorique.size();i++){
                 Forme forme = undoHistorique.elementAt(i);
                 System.out.println(undoHistorique.size());
                 if(forme.getClass() == Ligne.class){
                     Ligne ligneTemp = (Ligne)forme;
-                    gc.setLineWidth(ligneTemp.getLargeurTrait());
-                    gc.setStroke(ligneTemp.getCouleur());
-                    gc.setFill(ligneTemp.getCouleurRemplissage());
-                    gc.strokeLine(ligneTemp.getX(),ligneTemp.getY(),ligneTemp.getX2(), ligneTemp.getY2());
+                    DessinateurLigne dessinateurLigne = new DessinateurLigne();
+                    dessinateurLigne.setForme(ligneTemp);
+                    dessinateurLigne.dessiner(gc);
                 }
                 if(forme.getClass() == Cercle.class){
                     Cercle cercleTemp = (Cercle) forme;
-                    gc.setLineWidth(cercleTemp.getLargeurTrait());
-                    gc.setStroke(cercleTemp.getCouleur());
-                    gc.setFill(cercleTemp.getCouleurRemplissage());
-                    gc.strokeOval(cercleTemp.getX(), cercleTemp.getY(), cercleTemp.getRayon(),cercleTemp.getRayon());
+                    DessinateurCercle dessinateurCercle = new DessinateurCercle();
+                    dessinateurCercle.setForme(cercleTemp);
+                    dessinateurCercle.dessiner(gc);
                 }
                 if(forme.getClass() == Carre.class){
                     Carre carreTemp = (Carre)forme;
-                    gc.setLineWidth(carreTemp.getLargeurTrait());
-                    gc.setStroke(carreTemp.getCouleur());
-                    gc.setFill(carreTemp.getCouleurRemplissage());
-                    gc.strokeRect(carreTemp.getX(),carreTemp.getY(),carreTemp.getCote(),carreTemp.getCote());
+                    DessinateurCarre dessinateurCarre = new DessinateurCarre();
+                    dessinateurCarre.setForme(carreTemp);
+                    dessinateurCarre.dessiner(gc);
                 }
                 if(forme.getClass() == Rectangle.class){
                     Rectangle rectangleTemp = (Rectangle)forme;
-                    gc.setLineWidth(rectangleTemp.getLargeurTrait());
-                    gc.setStroke(rectangleTemp.getCouleur());
-                    gc.setFill(rectangleTemp.getCouleurRemplissage());
-                    gc.strokeRect(rectangleTemp.getX(),rectangleTemp.getY(),rectangleTemp.getLargeur(),rectangleTemp.getLongueur());
+                    DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
+                    dessinateurRectangle.setForme(rectangleTemp);
+                    dessinateurRectangle.dessiner(gc);
                 }
                 if(forme.getClass() == Text.class){
                     Text textTemp = (Text)forme;
+                    DessinateurText dessinateurText = new DessinateurText();
+                    dessinateurText.setForme(textTemp);
+                    dessinateurText.dessiner(gc);
 
                 }
                 if(forme.getClass() == Ellipse.class){
                     Ellipse ellipseTemp = (Ellipse)forme;
+                    DessinateurEllipse dessinateurEllipse = new DessinateurEllipse();
+                    dessinateurEllipse.setForme(ellipseTemp);
+                    dessinateurEllipse.dessiner(gc);
                 }
             }
         }else{
@@ -177,7 +181,54 @@ public class DessinateurManager {
     }
 
     public void redo(GraphicsContext gc) {
+            if (!redoHistorique.empty()) {
+                Forme forme = redoHistorique.pop();
 
+                if (forme.getClass() == Ligne.class) {
+                    Ligne ligneTemp = (Ligne) forme;
+                    DessinateurLigne dessinateurLigne = new DessinateurLigne();
+                    dessinateurLigne.setForme(ligneTemp);
+                    dessinateurLigne.dessiner(gc);
+                    undoHistorique.push(ligneTemp);
+                }
+                if (forme.getClass() == Cercle.class) {
+                    Cercle cercleTemp = (Cercle) forme;
+                    DessinateurCercle dessinateurCercle = new DessinateurCercle();
+                    dessinateurCercle.setForme(cercleTemp);
+                    dessinateurCercle.dessiner(gc);
+                    undoHistorique.push(cercleTemp);
+                }
+                if (forme.getClass() == Carre.class) {
+                    Carre carreTemp = (Carre) forme;
+                    DessinateurCarre dessinateurCarre = new DessinateurCarre();
+                    dessinateurCarre.setForme(carreTemp);
+                    dessinateurCarre.dessiner(gc);
+                    undoHistorique.push(carreTemp);
+                }
+                if (forme.getClass() == Rectangle.class) {
+                    Rectangle rectangleTemp = (Rectangle) forme;
+                    DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
+                    dessinateurRectangle.setForme(rectangleTemp);
+                    dessinateurRectangle.dessiner(gc);
+                    undoHistorique.push(rectangleTemp);
+                }
+                if (forme.getClass() == Text.class) {
+                    Text textTemp = (Text) forme;
+                    DessinateurText dessinateurText = new DessinateurText();
+                    dessinateurText.setForme(textTemp);
+                    dessinateurText.dessiner(gc);
+                    undoHistorique.push(textTemp);
+                }
+                if (forme.getClass() == Ellipse.class) {
+                    Ellipse ellipseTemp = (Ellipse) forme;
+                    DessinateurEllipse dessinateurEllipse = new DessinateurEllipse();
+                    dessinateurEllipse.setForme(ellipseTemp);
+                    dessinateurEllipse.dessiner(gc);
+                    undoHistorique.push(ellipseTemp);
+                }
+            }else{
+                System.err.println("Aucune action à refaire !");
+            }
     }
 
 

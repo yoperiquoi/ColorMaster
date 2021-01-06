@@ -1,6 +1,7 @@
 package fenetre;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -16,6 +17,8 @@ import metier.formes.*;
 import java.util.Stack;
 
 public class FenetrePrincipal {
+
+    public TextArea fileName;
 
     Stack<Forme> historiqueUndo= new Stack<Forme>();
     Stack<Forme> historiqueRedo= new Stack<Forme>();
@@ -79,7 +82,10 @@ public class FenetrePrincipal {
     private Canvas canvas;
 
     public void initialize(){
+        DessinateurManager dessinateurManager= new DessinateurManager();
 
+        fileName.textProperty().bindBidirectional(nomFichier.textProperty());
+        dessinateurManager.fileNameProperty().bind(nomFichier.textProperty());
 
         tableauBtn[0] = undoBtn;
         tableauBtn[1] = redoBtn;
@@ -146,7 +152,7 @@ public class FenetrePrincipal {
         ellipseBtn.setUserData(dessinateurEllipse);
         textBtn.setUserData(dessinateurText);
 
-        DessinateurManager dessinateurManager= new DessinateurManager();
+
 
         selectionCouleur.setOnAction(e->{
             gc.setStroke(selectionCouleur.getValue());

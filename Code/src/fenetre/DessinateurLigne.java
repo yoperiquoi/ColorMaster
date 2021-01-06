@@ -10,6 +10,7 @@ public class DessinateurLigne extends Dessinateur{
     private Ligne ligne = new Ligne();
     @Override
     public void dessiner(GraphicsContext gc) {
+        System.out.println("oui");
         gc.strokeLine(ligne.getX(),ligne.getY(),ligne.getX2(),ligne.getY2());
     }
 
