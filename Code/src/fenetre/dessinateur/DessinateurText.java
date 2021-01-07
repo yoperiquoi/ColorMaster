@@ -1,5 +1,6 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerText;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
@@ -12,12 +13,13 @@ import metier.formes.Text;
 public class DessinateurText extends Dessinateur{
     private Text text = new Text();
 
-    public void dessiner(GraphicsContext gc,TextArea textArea) {
-        gc.fillText(textArea.getText(), text.getX(), text.getY());
-        gc.strokeText(textArea.getText(), text.getX(), text.getY());
+    public void dessiner(GraphicsContext gc) {
+        commande= new DessinerText(text);
+        gc.fillText(text.getContenu(),  text.getX(), text.getY());
+        gc.strokeText(text.getContenu(), text.getX(), text.getY());
     }
 
-    public void definirFormeOnMousePressed(Slider slider, MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage) {
+    public void definirFormeOnMousePressed(Slider slider, MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage,TextArea textArea) {
         gc.setLineWidth(1);
         gc.setFont(Font.font(slider.getValue()));
         gc.setStroke(couleur);
@@ -27,6 +29,7 @@ public class DessinateurText extends Dessinateur{
         }
         text.setX((float)event.getX());
         text.setY((float)event.getY());
+        text.setContenu(textArea.getText());
     }
 
 

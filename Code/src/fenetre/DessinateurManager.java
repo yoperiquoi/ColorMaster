@@ -3,8 +3,10 @@ package fenetre;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import fenetre.commande.DessinerDessin;
+import fenetre.commande.DessinerEffacement;
+import fenetre.commande.ICommande;
+import fenetre.dessinateur.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
@@ -12,10 +14,7 @@ import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -34,22 +33,22 @@ import java.util.Stack;
 
 public class DessinateurManager {
     Dessinateur dessinateur;
-    Stack<Forme> undoHistorique = new Stack<>();
-    Stack<Forme> redoHistorique = new Stack<>();
-    Slider slider;
+    DessinateurText dessinateurText = new DessinateurText();
+    Stack<ICommande> undoHistorique = new Stack<>();
+    Stack<ICommande> redoHistorique = new Stack<>();
     Dessin dessin = new Dessin();
     Effacement effacement = new Effacement();
 
-    private StringProperty fileName = new SimpleStringProperty();
+    private StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
         public StringProperty fileNameProperty(){return fileName;}
         public String getFileName(){return fileName.get();}
         public void setFileName(String valeur){ fileName.set(valeur);}
 
-
-    public void definirDebutFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn){
-        dessinateur =(Dessinateur) outils.getSelectedToggle().getUserData();
+    public void definirDebutFigure(Slider slider, MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn, ToggleButton effacerBtn, ToggleButton textBtn, TextArea textArea){
+        dessinateur = (Dessinateur) outils.getSelectedToggle().getUserData();
         if (dessinBtn.isSelected()) {
             gc.setStroke(couleur);
+            dessin.setCouleur(couleur);
             dessin.setX((float)e.getX());
             dessin.setY((float)e.getY());
             dessin.setLargueurTrait((float)gc.getLineWidth());
@@ -60,7 +59,9 @@ public class DessinateurManager {
             effacement.setY((float)e.getY());
             effacement.setLargueurTrait((float)gc.getLineWidth());
             gc.clearRect(e.getX() - largeur / 2, e.getY() - largeur / 2, largeur, largeur);
-        }else{
+        }else if (textBtn.isSelected()){
+            dessinateurText.definirFormeOnMousePressed(slider,e,gc,couleur,couleurRemplissage,textArea);
+        } else{
             dessinateur.definirFormeOnMousePressed(e,gc,couleur,couleurRemplissage);
         }
     }
@@ -79,24 +80,29 @@ public class DessinateurManager {
         }
     }
 
-    public void definirFinFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn){
+    public void definirFinFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn,ToggleButton textBtn){
         if(dessinBtn.isSelected()){
             gc.lineTo(e.getX(),e.getY());
             dessin.pointsY.add((float)e.getY());
             dessin.pointsX.add((float)e.getX());
             gc.stroke();
             gc.closePath();
-            undoHistorique.push(dessin);
+            DessinerDessin dessinerDessin = new DessinerDessin(dessin);
+            undoHistorique.push(dessinerDessin);
         }else if(effacerBtn.isSelected()){
             double largueurLigne = gc.getLineWidth();
             effacement.pointsY.add((float)e.getY());
             effacement.pointsX.add((float)e.getX());
             gc.clearRect(e.getX() - largueurLigne / 2, e.getY() - largueurLigne / 2, largueurLigne, largueurLigne);
-            undoHistorique.push(effacement);
+            DessinerEffacement dessinerEffacement = new DessinerEffacement(effacement);
+            undoHistorique.push(dessinerEffacement);
+        }else if(textBtn.isSelected()){
+            dessinateurText.dessiner(gc);
+            undoHistorique.push(dessinateur.getCommande());
         }else {
             dessinateur.definirFormeOnMouseReleased(e);
             dessinateur.dessiner(gc);
-            undoHistorique.push(dessinateur.getForme());
+            undoHistorique.push(dessinateur.getCommande());
         }
         System.out.println(undoHistorique);
     }
@@ -105,129 +111,31 @@ public class DessinateurManager {
         if(!undoHistorique.empty()){
             gc.setFill(Color.WHITE);
             gc.fillRect(0,0, 1080,720);
-            Forme formeSupprimee= undoHistorique.lastElement();
-            if(formeSupprimee.getClass() == Ligne.class){
-                Ligne ligneTemp = (Ligne)formeSupprimee;
-                redoHistorique.push(ligneTemp);
-            }
-            if(formeSupprimee.getClass() == Cercle.class){
-                Cercle cercleTemp = (Cercle) formeSupprimee;
-                redoHistorique.push(cercleTemp);
-            }
-            if(formeSupprimee.getClass() == Carre.class){
-                Carre carreTemp = (Carre)formeSupprimee;
-                redoHistorique.push(carreTemp);
-            }
-            if(formeSupprimee.getClass() == Rectangle.class){
-                Rectangle rectangleTemp = (Rectangle)formeSupprimee;
-                redoHistorique.push(rectangleTemp);
-            }
-            if(formeSupprimee.getClass() == Text.class){
-                Text textTemp = (Text)formeSupprimee;
-                redoHistorique.push(textTemp);
-            }
-            if(formeSupprimee.getClass() == Ellipse.class){
-                Ellipse ellipseTemp = (Ellipse)formeSupprimee;
-                redoHistorique.push(ellipseTemp);
-            }
-
-            undoHistorique.pop();
-
-            for(int i=0; i<undoHistorique.size();i++){
-                Forme forme = undoHistorique.elementAt(i);
-                System.out.println(undoHistorique.size());
-                if(forme.getClass() == Ligne.class){
-                    Ligne ligneTemp = (Ligne)forme;
-                    DessinateurLigne dessinateurLigne = new DessinateurLigne();
-                    dessinateurLigne.setForme(ligneTemp);
-                    dessinateurLigne.dessiner(gc);
-                }
-                if(forme.getClass() == Cercle.class){
-                    Cercle cercleTemp = (Cercle) forme;
-                    DessinateurCercle dessinateurCercle = new DessinateurCercle();
-                    dessinateurCercle.setForme(cercleTemp);
-                    dessinateurCercle.dessiner(gc);
-                }
-                if(forme.getClass() == Carre.class){
-                    Carre carreTemp = (Carre)forme;
-                    DessinateurCarre dessinateurCarre = new DessinateurCarre();
-                    dessinateurCarre.setForme(carreTemp);
-                    dessinateurCarre.dessiner(gc);
-                }
-                if(forme.getClass() == Rectangle.class){
-                    Rectangle rectangleTemp = (Rectangle)forme;
-                    DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
-                    dessinateurRectangle.setForme(rectangleTemp);
-                    dessinateurRectangle.dessiner(gc);
-                }
-                if(forme.getClass() == Text.class){
-                    Text textTemp = (Text)forme;
-                    DessinateurText dessinateurText = new DessinateurText();
-                    dessinateurText.setForme(textTemp);
-                    dessinateurText.dessiner(gc);
-
-                }
-                if(forme.getClass() == Ellipse.class){
-                    Ellipse ellipseTemp = (Ellipse)forme;
-                    DessinateurEllipse dessinateurEllipse = new DessinateurEllipse();
-                    dessinateurEllipse.setForme(ellipseTemp);
-                    dessinateurEllipse.dessiner(gc);
-                }
+            ICommande derniereCommande = undoHistorique.pop();
+            redoHistorique.push(derniereCommande);
+            for (ICommande c: undoHistorique) {
+                c.execute(gc);
             }
         }else{
-            System.err.println("Aucune retour possible !");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Action impossible !");
+            alert.setHeaderText("L'historique de undo est vide !");
+            alert.setContentText("Il n'est plus possible de revenir en arrière.");
+            alert.show();
         }
 
     }
 
     public void redo(GraphicsContext gc) {
             if (!redoHistorique.empty()) {
-                Forme forme = redoHistorique.pop();
-
-                if (forme.getClass() == Ligne.class) {
-                    Ligne ligneTemp = (Ligne) forme;
-                    DessinateurLigne dessinateurLigne = new DessinateurLigne();
-                    dessinateurLigne.setForme(ligneTemp);
-                    dessinateurLigne.dessiner(gc);
-                    undoHistorique.push(ligneTemp);
-                }
-                if (forme.getClass() == Cercle.class) {
-                    Cercle cercleTemp = (Cercle) forme;
-                    DessinateurCercle dessinateurCercle = new DessinateurCercle();
-                    dessinateurCercle.setForme(cercleTemp);
-                    dessinateurCercle.dessiner(gc);
-                    undoHistorique.push(cercleTemp);
-                }
-                if (forme.getClass() == Carre.class) {
-                    Carre carreTemp = (Carre) forme;
-                    DessinateurCarre dessinateurCarre = new DessinateurCarre();
-                    dessinateurCarre.setForme(carreTemp);
-                    dessinateurCarre.dessiner(gc);
-                    undoHistorique.push(carreTemp);
-                }
-                if (forme.getClass() == Rectangle.class) {
-                    Rectangle rectangleTemp = (Rectangle) forme;
-                    DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
-                    dessinateurRectangle.setForme(rectangleTemp);
-                    dessinateurRectangle.dessiner(gc);
-                    undoHistorique.push(rectangleTemp);
-                }
-                if (forme.getClass() == Text.class) {
-                    Text textTemp = (Text) forme;
-                    DessinateurText dessinateurText = new DessinateurText();
-                    dessinateurText.setForme(textTemp);
-                    dessinateurText.dessiner(gc);
-                    undoHistorique.push(textTemp);
-                }
-                if (forme.getClass() == Ellipse.class) {
-                    Ellipse ellipseTemp = (Ellipse) forme;
-                    DessinateurEllipse dessinateurEllipse = new DessinateurEllipse();
-                    dessinateurEllipse.setForme(ellipseTemp);
-                    dessinateurEllipse.dessiner(gc);
-                    undoHistorique.push(ellipseTemp);
-                }
+                ICommande derniereCommande = redoHistorique.pop();
+                derniereCommande.execute(gc);
             }else{
-                System.err.println("Aucune action à refaire !");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Action impossible !");
+                alert.setHeaderText("L'historique de redo est vide !");
+                alert.setContentText("Il n'est plus possible de refaire une action.");
+                alert.show();
             }
     }
 
@@ -275,6 +183,7 @@ public class DessinateurManager {
     }
 
     public void charger(GraphicsContext gc, Event event){
+            /*
         FileChooser openFile = new FileChooser();
         openFile.setTitle("Open File");
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -285,6 +194,7 @@ public class DessinateurManager {
                 InputStream io = new FileInputStream(file);
                 Image img = new Image(io);
                 gc.drawImage(img, 0, 0);
+                this.setFileName(file.getName());
 
                 //Récupére les historiques
                 FormeDeserializer deserializer= new FormeDeserializer("type");
@@ -308,13 +218,11 @@ public class DessinateurManager {
                     }.getType());
                     undoHistorique.clear();
                     undoHistorique.addAll(undo);
-                    System.out.println(undoHistorique);
 
                     List<Forme> redo;
                     redo = gson.fromJson(new FileReader(path2),new TypeToken<Stack<Forme>>(){}.getType());
                     redoHistorique.clear();
                     redoHistorique.addAll(redo);
-                    System.out.println(redoHistorique);
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Erreur ouverture document");
@@ -325,9 +233,17 @@ public class DessinateurManager {
                     alert.show();
                 }
             } catch (IOException ex) {
-                System.out.println("Error!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur ouverture document");
+                    alert.setHeaderText("Il y a eu une erreur pendant le chargement du fichier !");
+                    alert.setContentText(ex.message);
+                    undoHistorique= new Stack<Forme>();
+                    redoHistorique= new Stack<Forme>();
+                    alert.show();
             }
+
+             */
         }
     }
 
-}
+

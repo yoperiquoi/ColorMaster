@@ -1,4 +1,4 @@
-package fenetre;
+package fenetre.dessinateur;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;

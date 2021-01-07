@@ -1,5 +1,6 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerEllipse;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -10,6 +11,7 @@ public class DessinateurEllipse extends Dessinateur{
     Ellipse ellipse= new Ellipse();
     @Override
     public void dessiner(GraphicsContext gc) {
+        commande= new DessinerEllipse(ellipse);
         if(ellipse.getRempli()){
             gc.setFill(ellipse.getCouleurRemplissage());
             gc.fillOval(ellipse.getX(),ellipse.getY(),ellipse.getDiametre1(),ellipse.getDiametre2());

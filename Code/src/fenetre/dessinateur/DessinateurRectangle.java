@@ -1,5 +1,6 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerRectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -11,6 +12,7 @@ public class DessinateurRectangle extends Dessinateur{
 
     @Override
     public void dessiner(GraphicsContext gc) {
+        commande=new DessinerRectangle(rectangle);
         if(rectangle.getRempli()){
             gc.setFill(rectangle.getCouleurRemplissage());
             gc.fillRect(rectangle.getX(),rectangle.getY(),rectangle.getLargeur(),rectangle.getLongueur());

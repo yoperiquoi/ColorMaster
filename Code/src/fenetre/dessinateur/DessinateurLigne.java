@@ -1,5 +1,6 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerLigne;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -10,7 +11,7 @@ public class DessinateurLigne extends Dessinateur{
     private Ligne ligne = new Ligne();
     @Override
     public void dessiner(GraphicsContext gc) {
-        System.out.println("oui");
+        commande=new DessinerLigne(ligne);
         gc.strokeLine(ligne.getX(),ligne.getY(),ligne.getX2(),ligne.getY2());
     }
 

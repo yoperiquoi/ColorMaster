@@ -1,5 +1,7 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerCarre;
+import fenetre.commande.ICommande;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -11,6 +13,7 @@ public class DessinateurCarre extends Dessinateur{
 
     @Override
     public void dessiner(GraphicsContext gc) {
+        commande=new DessinerCarre(carre);
         if (carre.getRempli()){
             gc.setFill(carre.getCouleurRemplissage());
             gc.fillRect(carre.getX(),carre.getY(),carre.getCote(),carre.getCote());

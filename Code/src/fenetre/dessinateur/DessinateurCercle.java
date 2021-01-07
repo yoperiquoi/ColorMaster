@@ -1,12 +1,15 @@
-package fenetre;
+package fenetre.dessinateur;
 
+import fenetre.commande.DessinerCercle;
+import fenetre.commande.ICommande;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import metier.formes.Cercle;
 
 public class DessinateurCercle extends Dessinateur {
-    Cercle cercle= new Cercle();
+    private Cercle cercle= new Cercle();
+
 
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage){
@@ -33,6 +36,7 @@ public class DessinateurCercle extends Dessinateur {
 
     @Override
     public void dessiner(GraphicsContext gc){
+        commande= new DessinerCercle(cercle);
         if(cercle.getRempli()){
             gc.setFill(cercle.getCouleurRemplissage());
             gc.fillOval(cercle.getX(),cercle.getY(),cercle.getRayon(),cercle.getRayon());

@@ -1,7 +1,7 @@
 package fenetre;
 
+import fenetre.dessinateur.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -9,9 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import metier.formes.*;
 
 import java.util.Stack;
@@ -82,10 +81,18 @@ public class FenetrePrincipal {
     private Canvas canvas;
 
     public void initialize(){
+        //Stage thisStage = (Stage) canvas.getScene().getWindow();
+
         DessinateurManager dessinateurManager= new DessinateurManager();
 
         fileName.textProperty().bindBidirectional(nomFichier.textProperty());
-        dessinateurManager.fileNameProperty().bind(nomFichier.textProperty());
+        dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());
+
+        /*
+        thisStage.titleProperty().bind(
+                (dessinateurManager.fileNameProperty()).concat("- ColorMaster")
+        );
+        */
 
         tableauBtn[0] = undoBtn;
         tableauBtn[1] = redoBtn;
@@ -165,7 +172,7 @@ public class FenetrePrincipal {
 
         canvas.setOnMousePressed(e-> {
             if(!(outils.getSelectedToggle() == null)){
-                dessinateurManager.definirDebutFigure(e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn);
+                dessinateurManager.definirDebutFigure(slider,e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn,textBtn,textArea);
             }else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Pas d'outil sélectionné");
@@ -184,7 +191,7 @@ public class FenetrePrincipal {
 
         canvas.setOnMouseReleased(e->{
             if(!(outils.getSelectedToggle() == null)) {
-                dessinateurManager.definirFinFigure(e, gc, selectionCouleur.getValue(), selectionRempl.getValue(), outils, dessinBtn, effacerBtn);
+                dessinateurManager.definirFinFigure(e, gc, selectionCouleur.getValue(), selectionRempl.getValue(), outils, dessinBtn, effacerBtn,textBtn);
             }
         });
 
