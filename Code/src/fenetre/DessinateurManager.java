@@ -43,7 +43,7 @@ public class DessinateurManager {
     Stack<ICommande> undoHistorique = new Stack<>();
     Stack<ICommande> redoHistorique = new Stack<>();
 
-    private StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
+    private final StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
         public StringProperty fileNameProperty(){return fileName;}
         public String getFileName(){return fileName.get();}
         public void setFileName(String valeur){ fileName.set(valeur);}

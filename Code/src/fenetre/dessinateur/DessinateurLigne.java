@@ -8,7 +8,7 @@ import metier.formes.Forme;
 import metier.formes.Ligne;
 
 public class DessinateurLigne extends Dessinateur{
-    private Ligne ligne = new Ligne();
+    private final Ligne ligne = new Ligne();
     @Override
     public void dessiner(GraphicsContext gc) {
         commande=new DessinerLigne(ligne);

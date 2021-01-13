@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class DessinerEllipse implements ICommande {
     Ellipse ellipse;
-    private String type = "Ellipse";
+    private final String type = "Ellipse";
 
     public DessinerEllipse(Ellipse ellipse) {
         this.ellipse=ellipse;

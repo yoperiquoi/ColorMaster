@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 
 public class Rectangle extends Forme{
-    private String type = "Rectangle";
+    private final String type = "Rectangle";
     private float longueur;
     private float largeur;
 

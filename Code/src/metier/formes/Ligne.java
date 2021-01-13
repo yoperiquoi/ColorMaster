@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ligne extends Forme{
-    private String type = "Ligne";
+    private final String type = "Ligne";
     private float y2;
     private float x2;
 

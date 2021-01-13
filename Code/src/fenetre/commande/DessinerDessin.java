@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class DessinerDessin implements ICommande {
     Dessin dessin;
-    private String type = "Dessin";
+    private final String type = "Dessin";
 
     public DessinerDessin(Dessin dessin){
         this.dessin= dessin;

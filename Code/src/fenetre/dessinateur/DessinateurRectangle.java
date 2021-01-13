@@ -8,7 +8,7 @@ import metier.formes.Forme;
 import metier.formes.Rectangle;
 
 public class DessinateurRectangle extends Dessinateur{
-    private Rectangle rectangle= new Rectangle();
+    private final Rectangle rectangle= new Rectangle();
 
     @Override
     public void dessiner(GraphicsContext gc) {

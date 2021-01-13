@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class DessinerEffacement implements ICommande {
     Effacement effacement;
-    private String type = "Effacement";
+    private final String type = "Effacement";
 
     public DessinerEffacement(Effacement effacement) {
         this.effacement=effacement;

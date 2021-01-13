@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class DessinerCercle implements ICommande {
     Cercle cercle;
-    private String type = "Cercle";
+    private final String type = "Cercle";
 
     public DessinerCercle(Cercle cercle) {
         this.cercle=cercle;

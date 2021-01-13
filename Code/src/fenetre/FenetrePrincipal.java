@@ -46,9 +46,9 @@ public class FenetrePrincipal {
     ToggleGroup outils = new ToggleGroup();
 
     @FXML
-    private ColorPicker selectionCouleur = new ColorPicker(Color.BLACK);
+    private final ColorPicker selectionCouleur = new ColorPicker(Color.BLACK);
     @FXML
-    private ColorPicker selectionRempl = new ColorPicker(Color.TRANSPARENT);
+    private final ColorPicker selectionRempl = new ColorPicker(Color.TRANSPARENT);
 
     @FXML
     private TextArea textArea;

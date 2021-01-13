@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ellipse extends Forme{
-    private String type = "Ellipse";
+    private final String type = "Ellipse";
     private float diametre1;
     private float diametre2;
 

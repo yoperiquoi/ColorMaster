@@ -3,11 +3,9 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Carre;
 
-import java.io.Serializable;
-
 public class DessinerCarre implements ICommande {
     Carre carre;
-    private String type = "Carre";
+    private final String type = "Carre";
 
     public DessinerCarre(Carre carre){
         this.carre=carre;

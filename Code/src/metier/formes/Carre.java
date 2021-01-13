@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Carre extends Forme{
     private float cote;
-    private String type = "Carre";
+    private final String type = "Carre";
 
     public Carre(float x, float y, float cote, boolean rempli, Color couleurRemp, Color couleur){
         setX(x);

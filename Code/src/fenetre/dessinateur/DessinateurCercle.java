@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import metier.formes.Cercle;
 
 public class DessinateurCercle extends Dessinateur {
-    private Cercle cercle= new Cercle();
+    private final Cercle cercle= new Cercle();
 
 
     @Override

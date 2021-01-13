@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class DessinerRectangle implements ICommande {
     Rectangle rectangle;
-    private String type = "Carre";
+    private final String type = "Carre";
 
     public DessinerRectangle(Rectangle rectangle) {
         this.rectangle=rectangle;

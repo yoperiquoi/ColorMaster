@@ -9,7 +9,7 @@ import metier.formes.Carre;
 import metier.formes.Forme;
 
 public class DessinateurCarre extends Dessinateur{
-    private Carre carre = new Carre();
+    private final Carre carre = new Carre();
 
     @Override
     public void dessiner(GraphicsContext gc) {

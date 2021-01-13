@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 import metier.formes.Forme;
 
 interface IDessine {
-    public abstract void dessiner(GraphicsContext gc);
-    public abstract void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage);
-    public abstract void definirFormeOnMouseReleased(MouseEvent event);
-    public abstract Forme getForme();
+    void dessiner(GraphicsContext gc);
+    void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage);
+    void definirFormeOnMouseReleased(MouseEvent event);
+    Forme getForme();
 }

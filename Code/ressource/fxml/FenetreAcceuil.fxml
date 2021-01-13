@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fenetre.FenetreAcceuil"
-            prefHeight="1000" prefWidth="1200">
-    <top>
-        <Label text="ColorMaster" textFill="blue" BorderPane.alignment="CENTER">
-            <font>
-                <Font name="SansSerif Bold" size="20.0"/>
-            </font>
-        </Label>
-    </top>
-    <bottom>
-        <Button text="Ouvrir" BorderPane.alignment="Center" />
-    </bottom>
-    <padding>
-        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
-    </padding>
+<?import javafx.scene.text.Text?>
 
-
-</BorderPane>
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fenetre.FenetreAcceuil"
+      prefHeight="1000" prefWidth="1200">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="1000.0" prefWidth="1200.0">
+      <children>
+            <Button layoutX="199.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Nouveau document" fx:id="btnNouveauDoc">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="591.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Ouvrir Récent" fx:id="btnOuvrir">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text layoutX="463.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color Master" AnchorPane.bottomAnchor="806.0" AnchorPane.leftAnchor="463.0" AnchorPane.rightAnchor="463.625" AnchorPane.topAnchor="124.0">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Text>
+            <ListView layoutX="796.0" layoutY="364.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="355.0" prefWidth="303.0" fx:id="laListView"/>
+            <TextField layoutX="188.0" layoutY="653.0" fx:id="fileName"/>
+            <Text layoutX="796.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez sélectionner un fichier :" wrappingWidth="221.13671875" />
+            <Text layoutX="796.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fichier sélectionné" fx:id="fichierSelected"/>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

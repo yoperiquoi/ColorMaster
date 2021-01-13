@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DessinerDeserializer implements JsonDeserializer<ICommande> {
-    private String formeTypeElementName;
-    private Gson gson;
-    private Map<String,Class<? extends ICommande>> formeTypeRegistery;
+    private final String formeTypeElementName;
+    private final Gson gson;
+    private final Map<String,Class<? extends ICommande>> formeTypeRegistery;
 
     public DessinerDeserializer(String formeTypeElementName){
         this.formeTypeElementName= formeTypeElementName;

@@ -3,7 +3,7 @@ package metier.formes;
 import javafx.scene.paint.Color;
 
 public class Text extends Forme{
-    private String type = "Text";
+    private final String type = "Text";
     private String contenu;
 
     public Text(float x, float y, String contenu, boolean rempli, Color couleurRemp, Color couleur){
