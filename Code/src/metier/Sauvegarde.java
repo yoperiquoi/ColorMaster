@@ -1,29 +1,33 @@
 package metier;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import fenetre.commande.ICommande;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Stack;
 
 public class Sauvegarde {
 
-    static void sauvegarder(File fichier, Canvas canvas){
-        if(fichier !=null){
-            try {
-                WritableImage writableImage= new WritableImage(1080,720);
-                canvas.snapshot(null,writableImage);
-                RenderedImage renderedImage= SwingFXUtils.fromFXImage(writableImage,null);
-                ImageIO.write(renderedImage,"png",fichier);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Error !");
+    public static void sauvegarder(String file, Stack<ICommande> historique) {
+        if (file != null) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.setPrettyPrinting().create();
+            String undo = gson.toJson(historique);
+            try (FileWriter writer = new FileWriter(file);
+                 BufferedWriter bw = new BufferedWriter(writer)) {
+                bw.write(undo);
+            } catch (IOException ex) {
+                System.out.println("Error!");
             }
-        }else{
-            throw new IllegalArgumentException("Le fichier a sauvegarder n'est pas valide");
         }
     }
 }

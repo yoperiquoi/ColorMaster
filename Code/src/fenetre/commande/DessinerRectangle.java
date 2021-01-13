@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Rectangle;
 
-public class DessinerRectangle implements ICommande{
+import java.io.Serializable;
+
+public class DessinerRectangle implements ICommande {
     Rectangle rectangle;
+    private String type = "Carre";
 
     public DessinerRectangle(Rectangle rectangle) {
         this.rectangle=rectangle;

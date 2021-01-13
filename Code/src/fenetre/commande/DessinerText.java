@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Text;
 
-public class DessinerText implements ICommande{
+import java.io.Serializable;
+
+public class DessinerText implements ICommande {
     Text text;
+    private String type = "Text";
 
     public DessinerText(Text text) {
         this.text=text;

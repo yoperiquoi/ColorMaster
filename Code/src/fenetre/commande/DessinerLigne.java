@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Ligne;
 
-public class DessinerLigne implements ICommande{
+import java.io.Serializable;
+
+public class DessinerLigne implements ICommande {
     Ligne ligne;
+    private String type = "Ligne";
 
     public DessinerLigne(Ligne ligne) {
         this.ligne=ligne;

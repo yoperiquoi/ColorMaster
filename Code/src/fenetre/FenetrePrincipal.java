@@ -195,9 +195,6 @@ public class FenetrePrincipal {
             }
         });
 
-        //Ne marche pas correctement :
-        //Cercle, Text et carre moyen
-
 
         slider.valueProperty().addListener(e->{
             float largeur= (float)slider.getValue();

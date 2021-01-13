@@ -3,9 +3,10 @@ package metier.formes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
-public abstract class Forme {
+public abstract class Forme implements Serializable {
     private float x;
     private float y;
     private Color couleur = Color.BLACK;

@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Effacement;
 
+import java.io.Serializable;
+
 public class DessinerEffacement implements ICommande {
     Effacement effacement;
+    private String type = "Effacement";
 
     public DessinerEffacement(Effacement effacement) {
         this.effacement=effacement;

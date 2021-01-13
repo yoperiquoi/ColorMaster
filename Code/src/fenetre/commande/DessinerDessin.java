@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Dessin;
 
-public class DessinerDessin implements ICommande{
+import java.io.Serializable;
+
+public class DessinerDessin implements ICommande {
     Dessin dessin;
+    private String type = "Dessin";
 
     public DessinerDessin(Dessin dessin){
         this.dessin= dessin;

@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Ellipse;
 
-public class DessinerEllipse implements ICommande{
+import java.io.Serializable;
+
+public class DessinerEllipse implements ICommande {
     Ellipse ellipse;
+    private String type = "Ellipse";
 
     public DessinerEllipse(Ellipse ellipse) {
         this.ellipse=ellipse;

@@ -1,32 +1,33 @@
 package fenetre;
 
 import com.google.gson.*;
-import metier.formes.Forme;
+import fenetre.commande.ICommande;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FormeDeserializer implements JsonDeserializer<Forme> {
+public class DessinerDeserializer implements JsonDeserializer<ICommande> {
     private String formeTypeElementName;
     private Gson gson;
-    private Map<String,Class<? extends Forme>> formeTypeRegistery;
+    private Map<String,Class<? extends ICommande>> formeTypeRegistery;
 
-    public FormeDeserializer(String formeTypeElementName){
+    public DessinerDeserializer(String formeTypeElementName){
         this.formeTypeElementName= formeTypeElementName;
         this.gson = new Gson();
         this.formeTypeRegistery= new HashMap<>();
     }
 
-    public void registerShapeType(String formeTypeName, Class<? extends Forme> formeType){
+    public void registerShapeType(String formeTypeName, Class<? extends ICommande> formeType){
         formeTypeRegistery.put(formeTypeName,formeType);
     }
+
     @Override
-    public Forme deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ICommande deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject formeObject = json.getAsJsonObject();
         JsonElement formeTypeElement= formeObject.get(formeTypeElementName);
 
-        Class<? extends Forme> formeType = formeTypeRegistery.get(formeTypeElement.getAsString());
+        Class<? extends ICommande> formeType = formeTypeRegistery.get(formeTypeElement.getAsString());
         return gson.fromJson(formeObject,formeType);
     }
 }

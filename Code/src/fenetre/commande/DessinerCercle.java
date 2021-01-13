@@ -3,8 +3,11 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Cercle;
 
-public class DessinerCercle implements ICommande{
+import java.io.Serializable;
+
+public class DessinerCercle implements ICommande {
     Cercle cercle;
+    private String type = "Cercle";
 
     public DessinerCercle(Cercle cercle) {
         this.cercle=cercle;
