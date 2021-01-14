@@ -1,4 +1,4 @@
-package metier;
+package metier.persistance;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

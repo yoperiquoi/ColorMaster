@@ -5,7 +5,7 @@ import metier.formes.Text;
 
 import java.io.Serializable;
 
-public class DessinerText implements ICommande {
+public class DessinerText extends Dessiner implements ICommande {
     Text text;
     private final String type = "Text";
 

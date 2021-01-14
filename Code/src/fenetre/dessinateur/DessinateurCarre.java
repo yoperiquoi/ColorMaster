@@ -14,11 +14,7 @@ public class DessinateurCarre extends Dessinateur{
     @Override
     public void dessiner(GraphicsContext gc) {
         commande=new DessinerCarre(carre);
-        if (carre.getRempli()){
-            gc.setFill(carre.getCouleurRemplissage());
-            gc.fillRect(carre.getX(),carre.getY(),carre.getCote(),carre.getCote());
-        }
-        gc.strokeRect(carre.getX(),carre.getY(),carre.getCote(),carre.getCote());
+        commande.execute(gc);
     }
 
     @Override

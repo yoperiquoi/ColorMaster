@@ -1,7 +1,5 @@
 package fenetre;
 
-import fenetre.commande.DessinerDessin;
-import fenetre.commande.DessinerEffacement;
 import fenetre.commande.ICommande;
 import fenetre.dessinateur.Dessinateur;
 import fenetre.dessinateur.DessinateurDessin;
@@ -21,10 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import metier.Chargement;
-import metier.Sauvegarde;
-import metier.formes.Dessin;
-import metier.formes.Effacement;
+import metier.persistance.Chargement;
+import metier.persistance.Recent;
+import metier.persistance.Sauvegarde;
+
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
@@ -121,7 +119,7 @@ public class DessinateurManager {
 
 
 
-    public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event){
+    public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event) {
         FileChooser savefile = new FileChooser();
         savefile.setInitialFileName(fileName.getValue());
         savefile.setTitle("Save File");
@@ -141,6 +139,10 @@ public class DessinateurManager {
 
                 Sauvegarde.sauvegarder(path1,undoHistorique);
                 Sauvegarde.sauvegarder(path2,redoHistorique);
+                Stage scene = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                RecentManager recentManager =(RecentManager)scene.getUserData();
+                recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
+                recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
                 this.setFileName(file.getName());
             } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -167,6 +169,10 @@ public class DessinateurManager {
                 Image img = new Image(io);
                 gc.drawImage(img, 0, 0);
                 this.setFileName(file.getName());
+                Stage scene = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                RecentManager recentManager =(RecentManager)scene.getUserData();
+                recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
+                recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
 
                 String path1 = file.getAbsolutePath() + "Undo.json";
                 String path2 = file.getAbsolutePath() + "Redo.json";
@@ -192,6 +198,42 @@ public class DessinateurManager {
                 redoHistorique = new Stack<ICommande>();
                 alert.show();
             }
+        }
+    }
+    public void chargerFichier(GraphicsContext gc, RecentManager recentManager){
+        File file = new File(recentManager.getLesFichiers().get(recentManager.getLesFichiers().size()-1).getFileName());
+        try {
+            //Récupére l'image
+            InputStream io = new FileInputStream(file);
+            Image img = new Image(io);
+            gc.drawImage(img, 0, 0);
+            this.setFileName(file.getName());
+            recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
+            recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
+
+            String path1 = file.getAbsolutePath() + "Undo.json";
+            String path2 = file.getAbsolutePath() + "Redo.json";
+
+            if (!Files.exists(Path.of(path1)) | !Files.exists(Path.of(path2))){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur ouverture document");
+                alert.setHeaderText("Les historique de undo et de redo n'ont pas pu être chargé");
+                alert.setContentText("Un fichier de sauvegarde d'historique de undo et de redo n'a pas été trouvé.");
+                undoHistorique= new Stack<ICommande>();
+                redoHistorique= new Stack<ICommande>();
+                alert.show();
+            }
+            undoHistorique = Chargement.charger(path1);
+            redoHistorique = Chargement.charger(path2);
+            setFileName(file.getName());
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur ouverture document");
+            alert.setHeaderText("Il y a eu une erreur pendant le chargement du fichier !");
+            alert.setContentText(ex.getMessage());
+            undoHistorique = new Stack<ICommande>();
+            redoHistorique = new Stack<ICommande>();
+            alert.show();
         }
     }
 }

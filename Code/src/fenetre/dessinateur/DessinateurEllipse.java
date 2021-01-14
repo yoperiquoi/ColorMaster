@@ -12,11 +12,7 @@ public class DessinateurEllipse extends Dessinateur{
     @Override
     public void dessiner(GraphicsContext gc) {
         commande= new DessinerEllipse(ellipse);
-        if(ellipse.getRempli()){
-            gc.setFill(ellipse.getCouleurRemplissage());
-            gc.fillOval(ellipse.getX(),ellipse.getY(),ellipse.getDiametre1(),ellipse.getDiametre2());
-        }
-        gc.strokeOval(ellipse.getX(),ellipse.getY(),ellipse.getDiametre1(),ellipse.getDiametre2());
+        commande.execute(gc);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class DessinateurLigne extends Dessinateur{
     @Override
     public void dessiner(GraphicsContext gc) {
         commande=new DessinerLigne(ligne);
-        gc.strokeLine(ligne.getX(),ligne.getY(),ligne.getX2(),ligne.getY2());
+        commande.execute(gc);
     }
 
     @Override

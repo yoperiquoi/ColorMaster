@@ -15,8 +15,7 @@ public class DessinateurText extends Dessinateur{
 
     public void dessiner(GraphicsContext gc) {
         commande= new DessinerText(text);
-        gc.fillText(text.getContenu(),  text.getX(), text.getY());
-        gc.strokeText(text.getContenu(), text.getX(), text.getY());
+        commande.execute(gc);
     }
 
     public void definirFormeOnMousePressed(Slider slider, MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage,TextArea textArea) {

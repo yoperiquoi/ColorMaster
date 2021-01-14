@@ -5,7 +5,7 @@ import metier.formes.Ellipse;
 
 import java.io.Serializable;
 
-public class DessinerEllipse implements ICommande {
+public class DessinerEllipse extends Dessiner implements ICommande {
     Ellipse ellipse;
     private final String type = "Ellipse";
 

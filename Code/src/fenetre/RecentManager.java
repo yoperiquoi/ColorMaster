@@ -1,55 +1,43 @@
 package fenetre;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import metier.Recent;
-
-import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import metier.persistance.ChargementRecent;
+import metier.persistance.Recent;
+import metier.persistance.SauvegardeRecent;
 
 public class RecentManager {
     private ObservableList<Recent> lesFichiersObs = FXCollections.observableArrayList();
-    private ListProperty<Recent> lesFichiers = new SimpleListProperty<>();
+    private ListProperty<Recent> lesFichiers = new SimpleListProperty<>(lesFichiersObs);
         public ObservableList<Recent> getLesFichiers(){return lesFichiers.get();}
         public ListProperty<Recent> lesFichiersProperty(){return lesFichiers;}
         public void setLesFichiers(ObservableList<Recent> lesFichiers){this.lesFichiers.set(lesFichiers);}
 
 
     public RecentManager(){
-            lesFichiersObs.add(new Recent("/home/Documents/test"));
-            this.sauvegarder();
+            this.charger();
     }
 
     public void charger(){
-            /*
-            //Charger les fichiers récents
-            File file = new File(System.getProperty("user.dir").concat("/recent"));
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            List<Recent> tab =(Array) ois.readObject();
-            for (i=0;i<tab.)
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        */
-
+        //Charger les fichiers récents
+        ChargementRecent chargementRecent = new ChargementRecent();
+        chargementRecent.charger(lesFichiersObs);
     }
 
     public void sauvegarder(){
-            File file = new File(System.getProperty("user.dir").concat("/recent"));
-            try {
-                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-                oos.writeObject(new ArrayList<Recent>(lesFichiersObs));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        SauvegardeRecent sauvegardeRecent = new SauvegardeRecent();
+        sauvegardeRecent.sauver(lesFichiersObs);
+    }
+
+    public void add(Recent recent){
+            lesFichiersObs.add(recent);
+            sauvegarder();
+    }
+
+    public void del(Recent recent){
+            lesFichiersObs.remove(recent);
+            sauvegarder();
     }
 }

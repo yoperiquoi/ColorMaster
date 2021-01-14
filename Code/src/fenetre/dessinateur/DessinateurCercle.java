@@ -37,11 +37,7 @@ public class DessinateurCercle extends Dessinateur {
     @Override
     public void dessiner(GraphicsContext gc){
         commande= new DessinerCercle(cercle);
-        if(cercle.getRempli()){
-            gc.setFill(cercle.getCouleurRemplissage());
-            gc.fillOval(cercle.getX(),cercle.getY(),cercle.getRayon(),cercle.getRayon());
-        }
-        gc.strokeOval(cercle.getX(),cercle.getY(),cercle.getRayon(),cercle.getRayon());
+        commande.execute(gc);
     }
 
     @Override

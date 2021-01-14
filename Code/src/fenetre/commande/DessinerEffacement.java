@@ -5,7 +5,7 @@ import metier.formes.Effacement;
 
 import java.io.Serializable;
 
-public class DessinerEffacement implements ICommande {
+public class DessinerEffacement extends Dessiner implements ICommande {
     Effacement effacement;
     private final String type = "Effacement";
 

@@ -5,7 +5,7 @@ import metier.formes.Rectangle;
 
 import java.io.Serializable;
 
-public class DessinerRectangle implements ICommande {
+public class DessinerRectangle extends Dessiner implements ICommande {
     Rectangle rectangle;
     private final String type = "Carre";
 

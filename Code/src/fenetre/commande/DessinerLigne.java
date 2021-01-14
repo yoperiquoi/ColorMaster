@@ -5,7 +5,7 @@ import metier.formes.Ligne;
 
 import java.io.Serializable;
 
-public class DessinerLigne implements ICommande {
+public class DessinerLigne extends Dessiner implements ICommande {
     Ligne ligne;
     private final String type = "Ligne";
 

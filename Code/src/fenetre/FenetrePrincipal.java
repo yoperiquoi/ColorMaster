@@ -2,6 +2,7 @@ package fenetre;
 
 import fenetre.dessinateur.*;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -21,15 +22,17 @@ import java.util.Stack;
 
 public class FenetrePrincipal {
 
-    @FXML
-    public TextArea fileName;
 
-    @FXML
-    public GridPane grid;
 
     Stack<Forme> historiqueUndo= new Stack<Forme>();
     Stack<Forme> historiqueRedo= new Stack<Forme>();
 
+    @FXML
+    public TextArea fileName;
+    @FXML
+    public GridPane grid;
+    @FXML
+    public Label details;
     @FXML
     private VBox vbox;
     @FXML
@@ -91,21 +94,7 @@ public class FenetrePrincipal {
 
     public void initialize(){
 
-
         DessinateurManager dessinateurManager= new DessinateurManager();
-
-        Platform.runLater(()->{
-            Stage thisStage = (Stage) grid.getScene().getWindow();
-            String fichier = (String) thisStage.getUserData();
-
-            fileName.textProperty().bindBidirectional(nomFichier.textProperty());
-            dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());
-
-            thisStage.titleProperty().bind(
-                    (dessinateurManager.fileNameProperty()).concat(" - ColorMaster")
-            );
-            fileName.textProperty().setValue(fichier);
-        });
 
         tableauBtn[0] = undoBtn;
         tableauBtn[1] = redoBtn;
@@ -233,6 +222,26 @@ public class FenetrePrincipal {
 
         openBtn.setOnAction(e->{
             dessinateurManager.charger(gc,e);
+        });
+
+        Platform.runLater(()->{
+            Stage thisStage = (Stage) grid.getScene().getWindow();
+            RecentManager recentManager = (RecentManager) thisStage.getUserData();
+
+
+            fileName.textProperty().bindBidirectional(nomFichier.textProperty());
+            dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());
+
+            thisStage.titleProperty().bind(
+                    (dessinateurManager.fileNameProperty()).concat(" - ColorMaster")
+            );
+            fileName.textProperty().setValue(recentManager.getLesFichiers().get(recentManager.getLesFichiers().size()-1).getNom());
+            if(recentManager.getLesFichiers().get(recentManager.getLesFichiers().size()-1).getEnregistre()){
+                dessinateurManager.chargerFichier(gc,recentManager);
+            }
+            details.textProperty().bind(Bindings.format("Nom fichier : %s caractères",
+                    Bindings.createStringBinding(
+                            () -> Integer.toString(dessinateurManager.getFileName().length()), nomFichier.textProperty())));
         });
     }
 }

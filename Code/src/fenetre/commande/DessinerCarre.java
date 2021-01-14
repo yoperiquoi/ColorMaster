@@ -3,7 +3,7 @@ package fenetre.commande;
 import javafx.scene.canvas.GraphicsContext;
 import metier.formes.Carre;
 
-public class DessinerCarre implements ICommande {
+public class DessinerCarre extends Dessiner implements ICommande {
     Carre carre;
     private final String type = "Carre";
 

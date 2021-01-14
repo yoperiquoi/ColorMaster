@@ -13,11 +13,7 @@ public class DessinateurRectangle extends Dessinateur{
     @Override
     public void dessiner(GraphicsContext gc) {
         commande=new DessinerRectangle(rectangle);
-        if(rectangle.getRempli()){
-            gc.setFill(rectangle.getCouleurRemplissage());
-            gc.fillRect(rectangle.getX(),rectangle.getY(),rectangle.getLargeur(),rectangle.getLongueur());
-        }
-        gc.strokeRect(rectangle.getX(),rectangle.getY(),rectangle.getLargeur(),rectangle.getLongueur());
+        commande.execute(gc);
     }
 
     @Override

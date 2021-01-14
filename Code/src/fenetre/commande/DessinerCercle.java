@@ -5,7 +5,7 @@ import metier.formes.Cercle;
 
 import java.io.Serializable;
 
-public class DessinerCercle implements ICommande {
+public class DessinerCercle extends Dessiner implements ICommande {
     Cercle cercle;
     private final String type = "Cercle";
 
