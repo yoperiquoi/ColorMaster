@@ -1,12 +1,16 @@
 package fenetre;
 
 import fenetre.dessinateur.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,7 +21,11 @@ import java.util.Stack;
 
 public class FenetrePrincipal {
 
+    @FXML
     public TextArea fileName;
+
+    @FXML
+    public GridPane grid;
 
     Stack<Forme> historiqueUndo= new Stack<Forme>();
     Stack<Forme> historiqueRedo= new Stack<Forme>();
@@ -80,19 +88,24 @@ public class FenetrePrincipal {
     @FXML
     private Canvas canvas;
 
+
     public void initialize(){
-        //Stage thisStage = (Stage) canvas.getScene().getWindow();
+
 
         DessinateurManager dessinateurManager= new DessinateurManager();
 
-        fileName.textProperty().bindBidirectional(nomFichier.textProperty());
-        dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());
+        Platform.runLater(()->{
+            Stage thisStage = (Stage) grid.getScene().getWindow();
+            String fichier = (String) thisStage.getUserData();
 
-        /*
-        thisStage.titleProperty().bind(
-                (dessinateurManager.fileNameProperty()).concat("- ColorMaster")
-        );
-        */
+            fileName.textProperty().bindBidirectional(nomFichier.textProperty());
+            dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());
+
+            thisStage.titleProperty().bind(
+                    (dessinateurManager.fileNameProperty()).concat(" - ColorMaster")
+            );
+            fileName.textProperty().setValue(fichier);
+        });
 
         tableauBtn[0] = undoBtn;
         tableauBtn[1] = redoBtn;
@@ -221,7 +234,6 @@ public class FenetrePrincipal {
         openBtn.setOnAction(e->{
             dessinateurManager.charger(gc,e);
         });
-
     }
 }
 

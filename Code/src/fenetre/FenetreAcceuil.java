@@ -37,6 +37,7 @@ public class FenetreAcceuil {
 
     public void initialize(){
         RecentManager recentManager = new RecentManager();
+        fileName.setText("Nouveau document");
 
         laListView.itemsProperty().bind(recentManager.lesFichiersProperty());
 
@@ -45,15 +46,24 @@ public class FenetreAcceuil {
             public void changed(ObservableValue<? extends Recent> observableValue, Recent file, Recent t1) {
                     fichierSelected.textProperty().bind(t1.fileNameProperty());
                 }
-
         });
 
-        fileName.setPromptText("Nom document");
 
-        btnNouveauDoc.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                //Ouvrir l'application avec le nom dans le text field
-            }
+        btnOuvrir.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent e) {
+                  Parent root;
+                  try {
+                      root = FXMLLoader.load(getClass().getResource("/fxml/FenetrePrincipal.fxml"));
+                      Stage stage = new Stage();
+                      stage.setScene(new Scene(root, 1200, 1000));
+                      stage.show();
+                      ((Node)(e.getSource())).getScene().getWindow().hide();
+                  }
+                  catch (IOException ex) {
+                      ex.printStackTrace();
+                  }
+              }
         });
 
         btnNouveauDoc.setOnAction(new EventHandler<ActionEvent>() {
@@ -62,10 +72,9 @@ public class FenetreAcceuil {
                 try {
                     root = FXMLLoader.load(getClass().getResource("/fxml/FenetrePrincipal.fxml"));
                     Stage stage = new Stage();
-                    stage.setTitle("Color Master");
+                    stage.setUserData(fileName.getText());
                     stage.setScene(new Scene(root, 1200, 1000));
                     stage.show();
-                    // Hide this current window (if this is what you want)
                     ((Node)(e.getSource())).getScene().getWindow().hide();
                 }
                 catch (IOException ex) {

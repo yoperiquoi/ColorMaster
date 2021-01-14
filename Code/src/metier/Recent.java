@@ -4,8 +4,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class Recent {
+public class Recent implements Serializable {
     private final StringProperty fileName = new SimpleStringProperty();
     public StringProperty fileNameProperty(){return fileName;}
     public String getFileName(){return fileName.get();}
@@ -20,6 +21,10 @@ public class Recent {
     }
 
     private String apercu;
+
+    public Recent(String fileName){
+        setFileName(fileName);
+    }
 
 
 }
