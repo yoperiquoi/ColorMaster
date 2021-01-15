@@ -56,6 +56,7 @@ public class FenetreAcceuil {
 
         laListView.setCellFactory(__ -> new CelluleRecent());
 
+
         btnAjouter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

@@ -12,29 +12,25 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.171"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fenetre.FenetreAcceuil"
-      prefHeight="1000" prefWidth="1200">
+      prefHeight="1000" prefWidth="1200" styleClass="VBox">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="1000.0" prefWidth="1200.0">
       <children>
-            <Button layoutX="199.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Nouveau document" fx:id="btnNouveauDoc">
+            <Button layoutX="199.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Nouveau document" fx:id="btnNouveauDoc" styleClass="custom-button" wrapText="true" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="591.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Ouvrir Récent" fx:id="btnOuvrir">
+            <Button layoutX="591.0" layoutY="542.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="126.0" text="Ouvrir Récent" fx:id="btnOuvrir" styleClass="custom-button" wrapText="true" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Text layoutX="463.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color Master" AnchorPane.bottomAnchor="806.0" AnchorPane.leftAnchor="463.0" AnchorPane.rightAnchor="463.625" AnchorPane.topAnchor="124.0">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Text>
+            <Text layoutX="463.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color Master" AnchorPane.bottomAnchor="806.0" AnchorPane.leftAnchor="463.0" AnchorPane.rightAnchor="463.625" AnchorPane.topAnchor="124.0" styleClass="Titre"/>
             <ListView layoutX="796.0" layoutY="364.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="355.0" prefWidth="303.0" fx:id="laListView"/>
             <TextField layoutX="188.0" layoutY="653.0" fx:id="fileName"/>
             <Text layoutX="796.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez sélectionner un fichier :" wrappingWidth="221.13671875" />
-            <Text layoutX="796.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fichier sélectionné" fx:id="fichierSelected" disable="${laListView.selectionModel.selectedIndex == -1}"/>
+            <Text layoutX="796.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="fichierSelected" disable="${fichierSelected.text.empty}"/>
             <Button layoutX="796.0" layoutY="732.0" mnemonicParsing="false" text="Ajouter" fx:id="btnAjouter"/>
             <Button layoutX="998.0" layoutY="732.0" mnemonicParsing="false" prefWidth="100.0" prefHeight="25.0" text="Supprimer" fx:id="btnSupprimer"/>
 

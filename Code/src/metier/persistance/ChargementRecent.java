@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ChargementRecent {
     public void charger(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
-        if (!(file.length()==0)) {
+        if ((file.length()>4)) {
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
                 ArrayList<Recent> lesFichiers = new ArrayList<>();

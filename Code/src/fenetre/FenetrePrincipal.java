@@ -111,7 +111,7 @@ public class FenetrePrincipal {
         tableauOutils[7]= textBtn;
 
         for(ToggleButton outil: tableauOutils){
-            outil.setMinWidth(90);
+            outil.setMinWidth(120);
             outil.setToggleGroup(outils);
             outil.setCursor(Cursor.HAND);
         }
@@ -121,7 +121,7 @@ public class FenetrePrincipal {
         slider.setShowTickMarks(true);
 
         for (Button outil :tableauBtn){
-            outil.setMinWidth(90);
+            outil.setMinWidth(120);
             outil.setCursor(Cursor.HAND);
             outil.setTextFill(Color.BLACK);
             outil.setStyle("fx-background : #333");

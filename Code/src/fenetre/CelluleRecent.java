@@ -12,11 +12,12 @@ public class CelluleRecent extends javafx.scene.control.ListCell<Recent> {
         super.updateItem(item,empty);
         if(!empty){
             HBox container = new HBox();
-            Label label = new Label();
-            label.textProperty().bind(item.fileNameProperty());
-            container.getChildren().add(label);
-            Button button = new Button("Supprimer");
-            container.getChildren().add(button);
+            Label label1 = new Label();
+            label1.textProperty().bind(item.fileNameProperty());
+            Label label2 = new Label();
+            label2.textProperty().setValue("Nom fichier : ".concat(item.getNom()).concat(" | Chemin : "));
+            container.getChildren().add(label2);
+            container.getChildren().add(label1);
             setGraphic(container);
         }else{
             setGraphic(null);

@@ -12,25 +12,25 @@
     <GridPane.columnSpan/>
 
     <VBox GridPane.columnIndex="1" fx:id="vbox">
-        <ToggleButton  text="Dessin" fx:id="dessinBtn"/>
-        <ToggleButton text="Effacer" fx:id="effacerBtn"/>
-        <ToggleButton text="Ligne" fx:id="ligneBtn"/>
-        <ToggleButton text="Carré" fx:id="carreBtn"/>
-        <ToggleButton text="Rectangle" fx:id="rectangleBtn"/>
-        <ToggleButton text="Cercle" fx:id="cercleBtn"/>
-        <ToggleButton text="Ellipse" fx:id="ellipseBtn"/>
-        <ToggleButton text="Text" fx:id="textBtn"/>
+        <ToggleButton  text="Dessin" fx:id="dessinBtn" styleClass="custom-button"/>
+        <ToggleButton text="Effacer" fx:id="effacerBtn" styleClass="custom-button"/>
+        <ToggleButton text="Ligne" fx:id="ligneBtn" styleClass="custom-button"/>
+        <ToggleButton text="Carré" fx:id="carreBtn" styleClass="custom-button"/>
+        <ToggleButton text="Rectangle" fx:id="rectangleBtn" styleClass="custom-button"/>
+        <ToggleButton text="Cercle" fx:id="cercleBtn" styleClass="custom-button"/>
+        <ToggleButton text="Ellipse" fx:id="ellipseBtn" styleClass="custom-button"/>
+        <ToggleButton text="Text" fx:id="textBtn" styleClass="custom-button"/>
         <TextArea fx:id="textArea"/>
         <Label text="Couleur ligne" fx:id="couleurLigne"/>
         <ColorPicker minWidth="90" fx:id="selectionCouleur"/>
-        <Label text="Couleur remplissage" fx:id="couleurRempl"/>
+        <Label text="Couleur remplissage" fx:id="couleurRempl" wrapText="true"/>
         <ColorPicker minWidth="90" fx:id="selectionRempl"/>
         <Label text="1.0" fx:id="labelSlider"/>
         <Slider showTickLabels="true" fx:id="slider" showTickMarks="true"/>
-        <Button text="Undo" fx:id="undoBtn"/>
-        <Button text="Redo" fx:id="redoBtn"/>
-        <Button text="Save" fx:id="saveBtn"/>
-        <Button text="Open" fx:id="openBtn"/>
+        <Button text="Undo" fx:id="undoBtn" styleClass="custom-button"/>
+        <Button text="Redo" fx:id="redoBtn" styleClass="custom-button"/>
+        <Button text="Save" fx:id="saveBtn" styleClass="custom-button"/>
+        <Button text="Open" fx:id="openBtn" styleClass="custom-button"/>
         <Label text="Nom fichier" fx:id="nomFichier"/>
         <TextArea fx:id="fileName" maxHeight="45" prefWidth="100"/>
         <Label text="Nom fichier" fx:id="details" wrapText="true"/>
