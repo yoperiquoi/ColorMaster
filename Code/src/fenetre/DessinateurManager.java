@@ -33,19 +33,39 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Stack;
 
+/**
+ * Classe définissant le manager assurent la gestion de la partie dessin de l'application
+ */
 public class DessinateurManager {
+    //Déclaration des différents dessinateur nécessaire pour dessiner les différentes formes
     Dessinateur dessinateur;
     DessinateurText dessinateurText = new DessinateurText();
     DessinateurDessin dessinateurDessin = new DessinateurDessin();
     DessinateurEffacement dessinateurEffacement = new DessinateurEffacement();
+
+    //Déclaration des historique permettant le undo et redo
     Stack<ICommande> undoHistorique = new Stack<>();
     Stack<ICommande> redoHistorique = new Stack<>();
 
+    //Déclaration de la propriété responsable du nommage du fichier
     private final StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
         public StringProperty fileNameProperty(){return fileName;}
         public String getFileName(){return fileName.get();}
         public void setFileName(String valeur){ fileName.set(valeur);}
 
+    /**
+     * Méthode permettant la définition de la forme lorsque le bouton de la souris est pressé sur le canvas
+     * @param slider slider permettant de récupérer la taille du trait
+     * @param e événement déclenché par le clic de la souris
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param couleur couleur sélectionnée dans le sélecteur de couleur du trait de la figure
+     * @param couleurRemplissage couleur sélectionnée dans le sélecteur de de couleur du remplissage de la figure
+     * @param outils tableau de ToggleButton permettant de récupérer que bouton est enfoncé et ainsi le dessinateur lui correspondant
+     * @param dessinBtn bouton du dessin pour vérifier si il est enfoncé
+     * @param effacerBtn bouton de l'effacement pour vérifier si il est enfoncé
+     * @param textBtn bouton du texte pour vérifier si il est enfoncé
+     * @param textArea textArea nécessaire pour récupérer le texte à dessiner
+     */
     public void definirDebutFigure(Slider slider, MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn, ToggleButton effacerBtn, ToggleButton textBtn, TextArea textArea){
         dessinateur = (Dessinateur) outils.getSelectedToggle().getUserData();
         if(dessinBtn.isSelected()){
@@ -59,6 +79,13 @@ public class DessinateurManager {
         }
     }
 
+    /**
+     * Méthode permettant la définition de la figure pendant que l'utilisateur déplace la souris sur le canvas
+     * @param dessinBtn bouton correspondant au dessin
+     * @param effacerBtn bouton correspondant à l'effacement
+     * @param e événement déclenché par le déplacement de la souris avec le clic enfoncé
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     */
     public void definirPendantFigure (ToggleButton dessinBtn,ToggleButton effacerBtn,MouseEvent e,GraphicsContext gc){
         if(dessinBtn.isSelected()){
             dessinateurDessin.definirPendantFigure(e,gc);
@@ -67,6 +94,17 @@ public class DessinateurManager {
         }
     }
 
+    /**
+     * Méthode permettant la définition de la figure lorsque le clic de la souris est relâché
+     * @param e événement déclenché par le clic de la souris
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param couleur couleur sélectionnée dans le sélecteur de couleur du trait de la figure
+     * @param couleurRemplissage couleur sélectionnée dans le sélecteur de de couleur du remplissage de la figure
+     * @param outils tableau de ToggleButton permettant de récupérer que bouton est enfoncé et ainsi le dessinateur lui correspondant
+     * @param dessinBtn bouton du dessin pour vérifier si il est enfoncé
+     * @param effacerBtn bouton de l'effacement pour vérifier si il est enfoncé
+     * @param textBtn bouton du texte pour vérifier si il est enfoncé
+     */
     public void definirFinFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn,ToggleButton textBtn){
         if(dessinBtn.isSelected()){
             dessinateurDessin.definirFormeOnMouseReleased(e,gc);
@@ -76,7 +114,7 @@ public class DessinateurManager {
             undoHistorique.push(dessinateurEffacement.getCommande());
         }else if(textBtn.isSelected()){
             dessinateurText.dessiner(gc);
-            undoHistorique.push(dessinateur.getCommande());
+            undoHistorique.push(dessinateurText.getCommande());
         }else {
             dessinateur.definirFormeOnMouseReleased(e);
             dessinateur.dessiner(gc);
@@ -84,6 +122,10 @@ public class DessinateurManager {
         }
     }
 
+    /**
+     * Méthode permettant de faire marche arrière et d'annuler la dernière action
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     */
     public void undo(GraphicsContext gc){
         if(!undoHistorique.empty()){
             gc.setFill(Color.WHITE);
@@ -103,6 +145,10 @@ public class DessinateurManager {
 
     }
 
+    /**
+     * Méthode permettant de refaire une action qui a été annulé
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     */
     public void redo(GraphicsContext gc) {
             if (!redoHistorique.empty()) {
                 ICommande derniereCommande = redoHistorique.pop();
@@ -118,7 +164,12 @@ public class DessinateurManager {
     }
 
 
-
+    /**
+     * Méthode permettant la sauvegarde de l'image et des historiques lui correspondant
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param canvas canvas sur lequel on dessine
+     * @param event événement déclenché par l'appui sur le bouton de sauvegarde
+     */
     public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event) {
         FileChooser savefile = new FileChooser();
         savefile.setInitialFileName(fileName.getValue());
@@ -157,6 +208,11 @@ public class DessinateurManager {
         }
     }
 
+    /**
+     * Méthode permettant de charger une image avec les historique lui correspondant
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param event événement déclenché par l'appui sur le bouton de chargement
+     */
     public void charger(GraphicsContext gc, Event event){
         FileChooser openFile = new FileChooser();
         openFile.setTitle("Open File");
@@ -200,6 +256,12 @@ public class DessinateurManager {
             }
         }
     }
+
+    /**
+     * Méthode permettant de charger un fichier lorsque l'utilisateur decide de le sélectionner depuis l'accueil
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param recentManager le manager des fichier récent ouvert
+     */
     public void chargerFichier(GraphicsContext gc, RecentManager recentManager){
         File file = new File(recentManager.getLesFichiers().get(recentManager.getLesFichiers().size()-1).getFileName());
         try {

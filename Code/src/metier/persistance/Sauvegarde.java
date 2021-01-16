@@ -15,8 +15,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * Classe définissant les méthode de sauvegarde des historiques
+ */
 public class Sauvegarde {
 
+    /**
+     * Méthode permettant la sauvegarde de l'historique
+     * @param file fichier où sauvegarder
+     * @param historique historique à sauvegarder
+     */
     public static void sauvegarder(String file, Stack<ICommande> historique) {
         if (file != null) {
             GsonBuilder builder = new GsonBuilder();

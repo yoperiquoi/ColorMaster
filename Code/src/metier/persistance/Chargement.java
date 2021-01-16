@@ -14,8 +14,17 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Classe définissant le chargement d'un fichier
+ */
 public class Chargement {
 
+    /**
+     * Méthode permettant de charger un fichier dans un historique
+     * @param file fichier à charger
+     * @return la pile de commande
+     * @throws IllegalArgumentException en cas de fichier invalide
+     */
     public static Stack<ICommande> charger(String file) throws IllegalArgumentException {
         if (file != null) {
             try {

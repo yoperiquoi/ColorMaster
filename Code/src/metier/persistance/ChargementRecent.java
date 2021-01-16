@@ -8,7 +8,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+/**
+ * Classe responsable du chargement des fichiers récemment ouvert
+ */
 public class ChargementRecent {
+    /**
+     * Méthode permettant de charger les fichiers ouverts récemment
+     * @param lesFichiersObs Liste des fichiers
+     */
     public void charger(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
         if ((file.length()>4)) {

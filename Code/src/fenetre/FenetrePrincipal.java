@@ -20,13 +20,12 @@ import metier.formes.*;
 
 import java.util.Stack;
 
+/**
+ * Code-behind de la fenêtre principal permettant le dessin
+ */
 public class FenetrePrincipal {
 
-
-
-    Stack<Forme> historiqueUndo= new Stack<Forme>();
-    Stack<Forme> historiqueRedo= new Stack<Forme>();
-
+    //Récupération des différents éléments de la vue
     @FXML
     public TextArea fileName;
     @FXML
@@ -92,6 +91,9 @@ public class FenetrePrincipal {
     private Canvas canvas;
 
 
+    /**
+     * Méthode permettant la définition du contexte de la fenêtre avant l'ouverture de celle-ci
+     */
     public void initialize(){
 
         DessinateurManager dessinateurManager= new DessinateurManager();

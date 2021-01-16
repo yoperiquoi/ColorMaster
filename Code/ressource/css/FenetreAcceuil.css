@@ -15,5 +15,5 @@
 .Titre{
     -fx-font: 52px "Sérif";
     -fx-font-weight: bold;
-    -fx-text-shadow: 0.1em 0.1em #333;
+    -fx-text-shadow: 0.1em,0.1em,#333;
 }

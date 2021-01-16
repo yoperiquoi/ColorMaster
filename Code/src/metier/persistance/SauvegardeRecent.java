@@ -7,7 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * Classe définissant les méthode de sauvegarde des fichiers récents
+ */
 public class SauvegardeRecent {
+    /**
+     * Méthode permettant de sauvegarder des fichier récemment ouvert
+     * @param lesFichiersObs liste des fichiers récemment ouvert
+     */
     public void sauver(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
         try {

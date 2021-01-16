@@ -9,8 +9,8 @@ import java.lang.reflect.Type;
 public abstract class Forme implements Serializable {
     private float x;
     private float y;
-    private Color couleur = Color.BLACK;
-    private Color couleurRemplissage= Color.TRANSPARENT;
+    public Color couleur = Color.BLACK;
+    public Color couleurRemplissage= Color.TRANSPARENT;
     private Boolean rempli=false;
     private float largeurTrait;
 

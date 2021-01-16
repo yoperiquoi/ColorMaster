@@ -6,11 +6,25 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import metier.formes.Effacement;
 
+/**
+ * Définition d'un dessinateur permettant de définir l'effacement à dessiner
+ */
 public class DessinateurEffacement extends Dessinateur{
+    /**
+     * Effacement qui va être défini
+     */
     Effacement effacement = new Effacement();
 
+    /**
+     * Méthode permettant la définition de l'effacement lorsque le bouton de la souris est pressé sur le canvas
+     * @param event événement déclenché par le clic de la souris
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     * @param couleur couleur sélectionnée dans le sélecteur de couleur du trait de la figure
+     * @param couleurRemplissage couleur sélectionnée dans le sélecteur de de couleur du remplissage de la figure
+     */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage){
+        effacement= new Effacement();
         double largeur = gc.getLineWidth();
         effacement.setX((float)event.getX());
         effacement.setY((float)event.getY());
@@ -18,6 +32,11 @@ public class DessinateurEffacement extends Dessinateur{
         gc.clearRect(event.getX() - largeur / 2, event.getY() - largeur / 2, largeur, largeur);
     }
 
+    /**
+     * Méthode permettant la définition de la figure pendant que l'utilisateur déplace la souris sur le canvas
+     * @param e événement déclenché par le déplacement de la souris
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     */
     public void definirPendantFigure(MouseEvent e,GraphicsContext gc){
         double largueurLigne = gc.getLineWidth();
         effacement.pointsY.add((float)e.getY());
@@ -27,6 +46,11 @@ public class DessinateurEffacement extends Dessinateur{
     }
 
 
+    /**
+     *  Méthode permettant la définition de l'effacement lorsque le bouton de la souris est relâché
+     * @param e événement déclenché par le relâchement du clic de la souris
+     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
+     */
     public void definirFormeOnMouseReleased(MouseEvent e,GraphicsContext gc){
         double largueurLigne = gc.getLineWidth();
         effacement.pointsY.add((float)e.getY());
@@ -36,6 +60,10 @@ public class DessinateurEffacement extends Dessinateur{
         commande= new DessinerEffacement(effacement);
     }
 
+    /**
+     * Méthode permettant de récupérer le dessin défini
+     * @return forme défini dans le dessinateur
+     */
     @Override
     public Effacement getForme(){
         return effacement;

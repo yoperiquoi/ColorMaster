@@ -18,7 +18,11 @@ import metier.persistance.Recent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Code-behind de la fenêtre d'acceuil
+ */
 public class FenetreAcceuil {
+    //Récupération des différents éléments de la vue
     @FXML
     public Button btnOuvrir;
 
@@ -39,6 +43,9 @@ public class FenetreAcceuil {
     public Button btnSupprimer;
 
 
+    /**
+     * Méthode permettant la définition du contexte de la fenêtre avant l'ouverture de celle-ci
+     */
     public void initialize(){
         RecentManager recentManager = new RecentManager();
         fileName.setText("Nouveau document");
@@ -79,6 +86,9 @@ public class FenetreAcceuil {
               public void handle(ActionEvent e) {
                   Parent root;
                   try {
+                      if (laListView.getSelectionModel().getSelectedItem()==null){
+                          return;
+                      }
                       root = FXMLLoader.load(getClass().getResource("/fxml/FenetrePrincipal.fxml"));
                       Stage stage = new Stage();
                       Recent recent= laListView.getSelectionModel().getSelectedItem();
