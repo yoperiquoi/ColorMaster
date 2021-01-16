@@ -7,8 +7,15 @@ import java.util.List;
  * Classe définissant un groupe de forme
  */
 public class Groupe extends Forme{
+    /**
+     * Liste de forme constituant un groupe de forme
+     */
     private List<Forme> groupe = new LinkedList<>();
 
+    /**
+     * Constructeur permettant l'ajout direct d'un groupe
+     * @param groupe groupe à créer
+     */
     public Groupe(List<Forme> groupe){
         setGroupe(groupe);
     }

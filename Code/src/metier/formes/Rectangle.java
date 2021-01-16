@@ -6,8 +6,19 @@ import javafx.scene.paint.Color;
  * Classe définissant le rectangle
  */
 public class Rectangle extends Forme{
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Rectangle";
+
+    /**
+     * Longueur du rectangle
+     */
     private float longueur;
+
+    /**
+     * Largeur du rectangle
+     */
     private float largeur;
 
     /**

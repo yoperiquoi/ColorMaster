@@ -9,8 +9,14 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour un dessin
  */
 public class DessinerDessin  implements ICommande {
+    /**
+     * Dessin a dessiner
+     */
     Dessin dessin;
-    //Type permettant la persistance en Json
+
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Dessin";
 
     /**

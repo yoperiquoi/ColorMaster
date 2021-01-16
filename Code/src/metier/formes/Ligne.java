@@ -6,8 +6,19 @@ import javafx.scene.paint.Color;
  * Classe définissant une ligne
  */
 public class Ligne extends Forme{
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Ligne";
+
+    /**
+     * Coordonnées Y d'arrivé de la ligne
+     */
     private float y2;
+
+    /**
+     * Coordonnées X d'arrivé de la ligne
+     */
     private float x2;
 
     /**

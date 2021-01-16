@@ -12,13 +12,23 @@ import metier.persistance.SauvegardeRecent;
  * Classe assurant la gestion des fichier ouvert récemment
  */
 public class RecentManager {
+    /**
+     * ObservableList permettant d'afficher la liste des fichiers récent dans la vue
+     */
     private ObservableList<Recent> lesFichiersObs = FXCollections.observableArrayList();
+
+    /**
+     * Liste contenant les fichiers récents
+     */
     private ListProperty<Recent> lesFichiers = new SimpleListProperty<>(lesFichiersObs);
         public ObservableList<Recent> getLesFichiers(){return lesFichiers.get();}
         public ListProperty<Recent> lesFichiersProperty(){return lesFichiers;}
         public void setLesFichiers(ObservableList<Recent> lesFichiers){this.lesFichiers.set(lesFichiers);}
 
 
+    /**
+     * Constructeur du managfer de fichier récent
+     */
     public RecentManager(){
             this.charger();
     }

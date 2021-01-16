@@ -9,8 +9,14 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour un effacement
  */
 public class DessinerEffacement  implements ICommande {
+    /**
+     * Effacement à dessiner
+     */
     Effacement effacement;
-    //Type permettant la persistance en Json
+
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Effacement";
 
     /**

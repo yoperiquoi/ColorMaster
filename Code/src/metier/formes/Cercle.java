@@ -6,10 +6,29 @@ import javafx.scene.paint.Color;
  * Classe définissant un cercle
  */
 public class Cercle extends Forme{
+    /**
+     * Rayon du cercle
+     */
     private float rayon;
+
+    /**
+     * Diamètre du cercle
+     */
     private final float diametre=2*rayon;
+
+    /**
+     * Coordonnée X du centre du cercle
+     */
     private float centreX;
+
+    /**
+     * Coordonnée Y du centre du cercle
+     */
     private float centreY;
+
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Cercle";
 
     /**

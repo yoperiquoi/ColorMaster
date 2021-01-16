@@ -7,7 +7,14 @@ import javafx.scene.paint.Color;
  * Classe définissant un carré
  */
 public class Carre extends Forme{
+    /**
+     * Longueur des coté du carré
+     */
     private float cote;
+
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Carre";
 
     /**

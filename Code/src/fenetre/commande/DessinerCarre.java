@@ -7,9 +7,14 @@ import metier.formes.Carre;
  * Défini la méthode de dessin pour un carré
  */
 public class DessinerCarre  implements ICommande {
+    /**
+     * Carré à dessiner
+     */
     Carre carre;
 
-    //Type permettant la persistance en Json
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Carre";
 
     /**

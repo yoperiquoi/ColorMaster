@@ -23,22 +23,45 @@ import java.io.IOException;
  */
 public class FenetreAcceuil {
     //Récupération des différents éléments de la vue
+    /**
+     * Bouton ouvrir de la vue
+     */
     @FXML
     public Button btnOuvrir;
 
+    /**
+     * Textfield reponsable d'afficher le nom du fichier
+     */
     @FXML
     public TextField fileName;
 
+    /**
+     * Bouton ouvrir de la vue
+     */
     @FXML
     public Button btnNouveauDoc;
 
+    /**
+     * ListView affichant les fichiers récents
+     */
     @FXML
     public ListView<Recent> laListView;
 
+    /**
+     * Text affichant le fichier récent sélectionné
+     */
     @FXML
     public Text fichierSelected;
+
+    /**
+     * Bouton ajouter de la vue
+     */
     @FXML
     public Button btnAjouter;
+
+    /**
+     * Bouton supprimer
+     */
     @FXML
     public Button btnSupprimer;
 

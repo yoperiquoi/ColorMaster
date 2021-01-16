@@ -6,7 +6,14 @@ import javafx.scene.paint.Color;
  * Classe permettant de définir un texte
  */
 public class Text extends Forme{
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Text";
+
+    /**
+     * Contenu du text
+     */
     private String contenu;
 
     /**

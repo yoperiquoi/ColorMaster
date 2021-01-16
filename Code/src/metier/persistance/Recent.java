@@ -10,13 +10,22 @@ import java.io.Serializable;
  * Classe permettant de définir un fichier récent
  */
 public class Recent implements Serializable {
+    /**
+     * Propriété de chemin d'accès au fichier
+     */
     private final StringProperty fileName = new SimpleStringProperty();
     public StringProperty fileNameProperty(){return fileName;}
     public String getFileName(){return fileName.get();}
     public void setFileName(String valeur){ fileName.set(valeur);}
 
+    /**
+     * Nom du fichier
+      */
     private String nom;
 
+    /**
+     * Si le fichier est enregistré ou non
+     */
     private Boolean enregistre;
 
     /**

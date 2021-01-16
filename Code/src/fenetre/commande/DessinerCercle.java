@@ -9,8 +9,14 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour un cercle
  */
 public class DessinerCercle  implements ICommande {
+    /**
+     * Cercle à dessiner
+     */
     Cercle cercle;
-    //Type permettant la persistance en Json
+
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Cercle";
 
     /**

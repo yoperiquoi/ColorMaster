@@ -26,67 +26,169 @@ import java.util.Stack;
 public class FenetrePrincipal {
 
     //Récupération des différents éléments de la vue
+    /**
+     * TextArea affichant le nom du fichier
+     */
     @FXML
     public TextArea fileName;
+
+    /**
+     * Grille de la vue
+     */
     @FXML
     public GridPane grid;
+
+    /**
+     * Détails sur le nom du fichier
+     */
     @FXML
     public Label details;
+
+    /**
+     * Conteneurs des boutons
+     */
     @FXML
     private VBox vbox;
+
+    /**
+     * Bouton de dessin
+     */
     @FXML
     private ToggleButton dessinBtn;
+
+    /**
+     * Bouton de effacer
+     */
     @FXML
     private ToggleButton effacerBtn;
+
+    /**
+     * Bouton de ligne
+     */
     @FXML
     private ToggleButton ligneBtn;
+
+    /**
+     * Bouton de carre
+     */
     @FXML
     private ToggleButton carreBtn;
+
+    /**
+     * Bouton de rectangle
+     */
     @FXML
     private ToggleButton rectangleBtn;
+
+    /**
+     * Bouton de cercle
+     */
     @FXML
     private ToggleButton cercleBtn;
+
+    /**
+     * Bouton de ellipse
+     */
     @FXML
     private ToggleButton ellipseBtn;
+
+    /**
+     * Bouton de text
+     */
     @FXML
     private ToggleButton textBtn;
 
+    /**
+     * Tableau contenant tout les outils permettant de dessiner des formes
+     */
     ToggleButton[] tableauOutils= new ToggleButton[8];
 
+    /**
+     * Groupe contenant les outils
+     */
     ToggleGroup outils = new ToggleGroup();
 
+    /**
+     * Sélectionneur de couleur pour le contour
+     */
     @FXML
     private final ColorPicker selectionCouleur = new ColorPicker(Color.BLACK);
+
+    /**
+     * Sélectionneur de couleur pour le remplissage
+     */
     @FXML
     private final ColorPicker selectionRempl = new ColorPicker(Color.TRANSPARENT);
 
+    /**
+     * TextArea pour le remplissage de la forme Text
+     */
     @FXML
     private TextArea textArea;
 
+    /**
+     * Slider permettant de sélectionner la taille du trait
+     */
     @FXML
     private Slider slider;
 
+    /**
+     * Label affichant la taille correspondant au slider
+     */
     @FXML
     private Label labelSlider;
+
+    /**
+     * Label affichant couleur de la ligne
+     */
     @FXML
     private Label couleurLigne;
+
+    /**
+     * Label affichant couleur du remplissage
+     */
     @FXML
     private Label couleurRempl;
 
+    /**
+     * Label affichant le nom du fichier
+     */
     @FXML
     private Label nomFichier;
 
+    /**
+     * Bouton de undo
+     */
     @FXML
     private Button undoBtn;
+
+    /**
+     * Bouton de redo
+     */
     @FXML
     private Button redoBtn;
+
+    /**
+     * Bouton de sauvegarde
+     */
     @FXML
     private Button saveBtn;
+
+    /**
+     * Bouton de ouverture
+     */
     @FXML
     private Button openBtn;
 
+
+    /**
+     * Tableau contenant les boutons de sauvegarde,ouverture,undo,redo
+     */
     Button[] tableauBtn=new Button[4];
 
+    /**
+     * Canvas contenant le dessin
+     */
     @FXML
     private Canvas canvas;
 

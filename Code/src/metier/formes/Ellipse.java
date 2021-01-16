@@ -6,8 +6,19 @@ import javafx.scene.paint.Color;
  * Classe définissant l'ellipse
  */
 public class Ellipse extends Forme{
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Ellipse";
+
+    /**
+     * Diamètre 1 de l'ellipse
+     */
     private float diametre1;
+
+    /**
+     * Diamètre 2 de l'ellipse
+     */
     private float diametre2;
 
     /**

@@ -7,9 +7,24 @@ import java.util.List;
  * Classe définissant un dessin
  */
 public class Dessin extends Forme{
+    /**
+     * Largeur du trait
+     */
     float largueurTrait;
+
+    /**
+     * Type de la forme pour la persistance
+     */
     private final String type = "Dessin";
+
+    /**
+     * Liste des coordonnées des points en X
+     */
     public List<Float> pointsX = new LinkedList<Float>();
+
+    /**
+     * Liste des coordonnées des points en Y
+     */
     public List<Float> pointsY = new LinkedList<Float>();
 
     /**

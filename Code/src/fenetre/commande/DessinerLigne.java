@@ -9,9 +9,14 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour un carré
  */
 public class DessinerLigne  implements ICommande {
+    /**
+     * Ligne à dessiner
+     */
     Ligne ligne;
 
-    //Type permettant la persistance en Json
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Ligne";
 
     /**

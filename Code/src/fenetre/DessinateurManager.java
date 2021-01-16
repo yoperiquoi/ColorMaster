@@ -38,16 +38,37 @@ import java.util.Stack;
  */
 public class DessinateurManager {
     //Déclaration des différents dessinateur nécessaire pour dessiner les différentes formes
+    /**
+     * Dessinateur pour les forme "simple"
+     */
     Dessinateur dessinateur;
+    /**
+     * Dessinateur pour le texte
+     */
     DessinateurText dessinateurText = new DessinateurText();
+    /**
+     * Dessinateur pour le dessin
+     */
     DessinateurDessin dessinateurDessin = new DessinateurDessin();
+    /**
+     * Dessinateur pour l'effeacement
+     */
     DessinateurEffacement dessinateurEffacement = new DessinateurEffacement();
 
     //Déclaration des historique permettant le undo et redo
+    /**
+     * Pile responsable de l'enregistrement des dernières forme dessiné
+     */
     Stack<ICommande> undoHistorique = new Stack<>();
+    /**
+     * Pile responsable de l'enregistrement des derniers retour en arrière
+     */
     Stack<ICommande> redoHistorique = new Stack<>();
 
     //Déclaration de la propriété responsable du nommage du fichier
+    /**
+     * Propriété responsable du nommage du fichier
+     */
     private final StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
         public StringProperty fileNameProperty(){return fileName;}
         public String getFileName(){return fileName.get();}
@@ -68,6 +89,7 @@ public class DessinateurManager {
      */
     public void definirDebutFigure(Slider slider, MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn, ToggleButton effacerBtn, ToggleButton textBtn, TextArea textArea){
         dessinateur = (Dessinateur) outils.getSelectedToggle().getUserData();
+        //La gestion des dessin, effacement et text sont différent car il ne constitue pas de forme "simple"
         if(dessinBtn.isSelected()){
             dessinateurDessin.definirFormeOnMousePressed(e,gc,couleur,couleurRemplissage);
         }else if (effacerBtn.isSelected()) {

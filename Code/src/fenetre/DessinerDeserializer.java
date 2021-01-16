@@ -11,8 +11,19 @@ import java.util.Map;
  * Classe permettant la deserialization du Json
  */
 public class DessinerDeserializer implements JsonDeserializer<ICommande> {
+    /**
+     * Propriété responsable de définir le type à deserialization
+     */
     private final String formeTypeElementName;
+
+    /**
+     * Instanciation gson réalisant la deserialization
+     */
     private final Gson gson;
+
+    /**
+     * Registre contenant le nom de la classe en clé et la classe correspondant en valeur
+     */
     private final Map<String,Class<? extends ICommande>> formeTypeRegistery;
 
     /**

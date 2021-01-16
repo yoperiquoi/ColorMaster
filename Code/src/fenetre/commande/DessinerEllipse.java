@@ -9,9 +9,14 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour une ellipse
  */
 public class DessinerEllipse  implements ICommande {
+    /**
+     * Ellipse a dessiner
+     */
     Ellipse ellipse;
 
-    //Type permettant la persistance en Json
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Ellipse";
 
     /**

@@ -9,9 +9,15 @@ import java.io.Serializable;
  * Défini la méthode de dessin pour un carré
  */
 public class DessinerRectangle  implements ICommande {
+
+    /**
+     * Rectangle à dessiner
+     */
     Rectangle rectangle;
 
-    //Type permettant la persistance en Json
+    /**
+     * Type permettant la persistance
+     */
     private final String type = "Carre";
 
     /**
