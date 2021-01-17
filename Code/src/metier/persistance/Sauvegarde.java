@@ -29,10 +29,10 @@ public class Sauvegarde {
         if (file != null) {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.setPrettyPrinting().create();
-            String undo = gson.toJson(historique);
+            String s = gson.toJson(historique);
             try (FileWriter writer = new FileWriter(file);
                  BufferedWriter bw = new BufferedWriter(writer)) {
-                bw.write(undo);
+                 bw.write(s);
             } catch (IOException ex) {
                 System.out.println("Error!");
             }

@@ -25,6 +25,7 @@ public class DessinateurText extends Dessinateur{
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void dessiner(GraphicsContext gc) {
+        //Pour dessiner nous utilisons la commande initialisé avec le carré déjà défini
         commande= new DessinerText(text);
         commande.execute(gc);
     }
@@ -39,7 +40,11 @@ public class DessinateurText extends Dessinateur{
      * @param textArea textArea permettant de récupérer le text qui devra être dessiné
      */
     public void definirFormeOnMousePressed(Slider slider, MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage,TextArea textArea) {
+        //Pour ne pas se retrouver toujours avec la même référence du texte on fait attention à bien instancié une nouvelle
+        //fois le texte avec rien de défini à l'intérieur
         text=new Text();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setLineWidth(1);
         gc.setFont(Font.font(slider.getValue()));
         gc.setStroke(couleur);
@@ -49,7 +54,9 @@ public class DessinateurText extends Dessinateur{
         }
         text.setX((float)event.getX());
         text.setY((float)event.getY());
+        //On défini le contenu du texte à dessiner
         text.setContenu(textArea.getText());
+        //La figure est déjà défini dès la pression du clic
     }
 
 

@@ -17,6 +17,7 @@ public class CelluleRecent extends javafx.scene.control.ListCell<Recent> {
     @Override
     protected void updateItem(Recent item, boolean empty){
         super.updateItem(item,empty);
+        //On oublie pas de faire le test histoire de ne pas avoir de "duplication"
         if(!empty){
             HBox container = new HBox();
             Label label1 = new Label();
@@ -27,6 +28,7 @@ public class CelluleRecent extends javafx.scene.control.ListCell<Recent> {
             container.getChildren().add(label1);
             setGraphic(container);
         }else{
+            //Si il y a rien à afficher alors on affiche rien
             setGraphic(null);
         }
     }

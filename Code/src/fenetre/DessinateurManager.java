@@ -70,9 +70,24 @@ public class DessinateurManager {
      * Propriété responsable du nommage du fichier
      */
     private final StringProperty fileName = new SimpleStringProperty("Nouveau fichier");
-        public StringProperty fileNameProperty(){return fileName;}
-        public String getFileName(){return fileName.get();}
-        public void setFileName(String valeur){ fileName.set(valeur);}
+
+    /**
+     * Méthode permettant de récupérer le string property du nom du fichier
+      * @return string property du nom du fichier
+     */
+    public StringProperty fileNameProperty(){return fileName;}
+
+    /**
+     * Méthode permettant de récupérer le nom du fichier
+     * @return nom du fichier
+     */
+     public String getFileName(){return fileName.get();}
+
+    /**
+     * Méthode permettant de définir le nom du fichier
+     * @param valeur nom du fichier
+     */
+    public void setFileName(String valeur){ fileName.set(valeur);}
 
     /**
      * Méthode permettant la définition de la forme lorsque le bouton de la souris est pressé sur le canvas
@@ -109,6 +124,8 @@ public class DessinateurManager {
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void definirPendantFigure (ToggleButton dessinBtn,ToggleButton effacerBtn,MouseEvent e,GraphicsContext gc){
+        //Seul le dessin et l'effacement sont appelé lors du déplacement de la souris car ce sont des forme particulière
+        //du fait qu'elle ne suive pas de formule mathématique
         if(dessinBtn.isSelected()){
             dessinateurDessin.definirPendantFigure(e,gc);
         }else if(effacerBtn.isSelected()) {
@@ -140,6 +157,8 @@ public class DessinateurManager {
         }else {
             dessinateur.definirFormeOnMouseReleased(e);
             dessinateur.dessiner(gc);
+            //Les commande des dessinateur qui sont alors rempli avec la forme défini sont stocker dans l'historique
+            //de redo pour que l'on puisse retracer les figure
             undoHistorique.push(dessinateur.getCommande());
         }
     }
@@ -149,6 +168,8 @@ public class DessinateurManager {
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void undo(GraphicsContext gc){
+        //Pour faire un retour en arrière on supprimer juste le dernier élement de l'historique de undo
+        //puis on retrace tout les figures restante dans l'historique
         if(!undoHistorique.empty()){
             gc.setFill(Color.WHITE);
             gc.fillRect(0,0, 1080,720);
@@ -172,17 +193,18 @@ public class DessinateurManager {
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void redo(GraphicsContext gc) {
-            if (!redoHistorique.empty()) {
-                ICommande derniereCommande = redoHistorique.pop();
-                derniereCommande.execute(gc);
-                undoHistorique.push(derniereCommande);
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Action impossible !");
-                alert.setHeaderText("L'historique de redo est vide !");
-                alert.setContentText("Il n'est plus possible de refaire une action.");
-                alert.show();
-            }
+        //Pour faire annuler la dernière action on la récupére simplement puis on l'exécute
+        if (!redoHistorique.empty()) {
+            ICommande derniereCommande = redoHistorique.pop();
+            derniereCommande.execute(gc);
+            undoHistorique.push(derniereCommande);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Action impossible !");
+            alert.setHeaderText("L'historique de redo est vide !");
+            alert.setContentText("Il n'est plus possible de refaire une action.");
+            alert.show();
+        }
     }
 
 
@@ -193,6 +215,7 @@ public class DessinateurManager {
      * @param event événement déclenché par l'appui sur le bouton de sauvegarde
      */
     public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event) {
+        //On utilise un FileChooser pour que l'utilisateur puisse choisir ou enregistrer avec le nom voulu
         FileChooser savefile = new FileChooser();
         savefile.setInitialFileName(fileName.getValue());
         savefile.setTitle("Save File");
@@ -207,16 +230,20 @@ public class DessinateurManager {
                 RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
                 ImageIO.write(renderedImage, "png", file);
 
-                String path1 = file.getAbsolutePath() + "Undo.json";
-                String path2 = file.getAbsolutePath() + "Redo.json";
+                //Enregistrement des historiques
+                Sauvegarde.sauvegarder(file.getAbsolutePath() + "Undo.json",undoHistorique);
+                Sauvegarde.sauvegarder(file.getAbsolutePath() + "Redo.json",redoHistorique);
 
-                Sauvegarde.sauvegarder(path1,undoHistorique);
-                Sauvegarde.sauvegarder(path2,redoHistorique);
+                //Récupération du manager des récent pour ajouter le nouveau fichier enregistré
                 Stage scene = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 RecentManager recentManager =(RecentManager)scene.getUserData();
                 recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
                 recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
+
+                //On défini enfin le nom du fichier comme celui défini par l'utilisateur
                 this.setFileName(file.getName());
+
+
             } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur ouverture document");
@@ -236,6 +263,7 @@ public class DessinateurManager {
      * @param event événement déclenché par l'appui sur le bouton de chargement
      */
     public void charger(GraphicsContext gc, Event event){
+        //On utilise un FileChooser pour que l'utilisateur puisse choisir quel fichier charger
         FileChooser openFile = new FileChooser();
         openFile.setTitle("Open File");
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -246,28 +274,19 @@ public class DessinateurManager {
                 InputStream io = new FileInputStream(file);
                 Image img = new Image(io);
                 gc.drawImage(img, 0, 0);
+
+                //Défini le nom de l'image au nom du fichier
                 this.setFileName(file.getName());
+
+                //Ajoute le nouveau fichier chargé au récents
                 Stage scene = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 RecentManager recentManager =(RecentManager)scene.getUserData();
                 recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
                 recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
 
-                String path1 = file.getAbsolutePath() + "Undo.json";
-                String path2 = file.getAbsolutePath() + "Redo.json";
-
-                if (!Files.exists(Path.of(path1)) | !Files.exists(Path.of(path2))){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Erreur ouverture document");
-                    alert.setHeaderText("Les historique de undo et de redo n'ont pas pu être chargé");
-                    alert.setContentText("Un fichier de sauvegarde d'historique de undo et de redo n'a pas été trouvé.");
-                    undoHistorique= new Stack<ICommande>();
-                    redoHistorique= new Stack<ICommande>();
-                    alert.show();
-                }
-                undoHistorique = Chargement.charger(path1);
-                redoHistorique = Chargement.charger(path2);
-                setFileName(file.getName());
-                } catch (IOException ex) {
+                //On récupére les historiques
+                chargerHistoriques(file);
+            } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur ouverture document");
                 alert.setHeaderText("Il y a eu une erreur pendant le chargement du fichier !");
@@ -277,6 +296,28 @@ public class DessinateurManager {
                 alert.show();
             }
         }
+    }
+
+    /**
+     * Méthode permettant de charger les historiques de undo et de redo
+     * @param file fichier correspond à l'image à charger
+     */
+    private void chargerHistoriques(File file) {
+        String path1 = file.getAbsolutePath() + "Undo.json";
+        String path2 = file.getAbsolutePath() + "Redo.json";
+
+        if (!Files.exists(Path.of(path1)) | !Files.exists(Path.of(path2))){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur ouverture document");
+            alert.setHeaderText("Les historique de undo et de redo n'ont pas pu être chargé");
+            alert.setContentText("Un fichier de sauvegarde d'historique de undo et de redo n'a pas été trouvé.");
+            undoHistorique= new Stack<ICommande>();
+            redoHistorique= new Stack<ICommande>();
+            alert.show();
+        }
+        undoHistorique = Chargement.charger(path1);
+        redoHistorique = Chargement.charger(path2);
+        setFileName(file.getName());
     }
 
     /**
@@ -295,21 +336,8 @@ public class DessinateurManager {
             recentManager.getLesFichiers().remove(recentManager.getLesFichiers().size()-1);
             recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),true));
 
-            String path1 = file.getAbsolutePath() + "Undo.json";
-            String path2 = file.getAbsolutePath() + "Redo.json";
+            chargerHistoriques(file);
 
-            if (!Files.exists(Path.of(path1)) | !Files.exists(Path.of(path2))){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur ouverture document");
-                alert.setHeaderText("Les historique de undo et de redo n'ont pas pu être chargé");
-                alert.setContentText("Un fichier de sauvegarde d'historique de undo et de redo n'a pas été trouvé.");
-                undoHistorique= new Stack<ICommande>();
-                redoHistorique= new Stack<ICommande>();
-                alert.show();
-            }
-            undoHistorique = Chargement.charger(path1);
-            redoHistorique = Chargement.charger(path2);
-            setFileName(file.getName());
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur ouverture document");

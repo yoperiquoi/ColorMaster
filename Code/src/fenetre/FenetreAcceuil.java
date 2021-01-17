@@ -70,11 +70,15 @@ public class FenetreAcceuil {
      * Méthode permettant la définition du contexte de la fenêtre avant l'ouverture de celle-ci
      */
     public void initialize(){
+        //Instanciation du manager pour les fichiers récents
         RecentManager recentManager = new RecentManager();
         fileName.setText("Nouveau document");
 
 
+        //On bind les items de la list view à ceux de la liste observable du manager
         laListView.itemsProperty().bind(recentManager.lesFichiersProperty());
+
+        //On défini un binding pour afficher le fichier sélectionné dans un label
         laListView.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
             if(oldValue!=null){
                 fichierSelected.textProperty().unbind();
@@ -84,6 +88,7 @@ public class FenetreAcceuil {
             }
         }));
 
+        //On défini la cell Factory qu'elle devra utiliser pour afficher les fichiers récents
         laListView.setCellFactory(__ -> new CelluleRecent());
 
 

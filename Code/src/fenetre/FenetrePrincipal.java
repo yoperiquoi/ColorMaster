@@ -112,13 +112,13 @@ public class FenetrePrincipal {
      * Sélectionneur de couleur pour le contour
      */
     @FXML
-    private final ColorPicker selectionCouleur = new ColorPicker(Color.BLACK);
+    private ColorPicker selectionCouleur;
 
     /**
      * Sélectionneur de couleur pour le remplissage
      */
     @FXML
-    private final ColorPicker selectionRempl = new ColorPicker(Color.TRANSPARENT);
+    private ColorPicker selectionRempl;
 
     /**
      * TextArea pour le remplissage de la forme Text
@@ -228,11 +228,8 @@ public class FenetrePrincipal {
             outil.setMinWidth(120);
             outil.setCursor(Cursor.HAND);
             outil.setTextFill(Color.BLACK);
-            outil.setStyle("fx-background : #333");
         }
 
-        saveBtn.setStyle("fx-background : #333");
-        openBtn.setStyle("fx-background : #333");
 
         vbox.setPadding(new Insets(5));
         vbox.setStyle("fx-background : white");
@@ -328,6 +325,8 @@ public class FenetrePrincipal {
             dessinateurManager.charger(gc,e);
         });
 
+        //On utilise runLater pour s'assurer que le code s'exécute lorsque la page est chargé au complet comme nous
+        //agissons particulièrement sur le titre de la fenêtre avec un binding
         Platform.runLater(()->{
             Stage thisStage = (Stage) grid.getScene().getWindow();
             RecentManager recentManager = (RecentManager) thisStage.getUserData();

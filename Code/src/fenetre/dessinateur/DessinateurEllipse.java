@@ -21,6 +21,7 @@ public class DessinateurEllipse extends Dessinateur{
      */
     @Override
     public void dessiner(GraphicsContext gc) {
+        //Pour dessiner nous utilisons la commande initialisé avec l'ellipse déjà défini
         commande= new DessinerEllipse(ellipse);
         commande.execute(gc);
     }
@@ -34,7 +35,11 @@ public class DessinateurEllipse extends Dessinateur{
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage) {
+        //Pour ne pas se retrouver toujours avec la même référence du ellipse on fait attention à bien instancié une nouvelle
+        //fois le ellipse avec rien de défini à l'intérieur
         ellipse= new Ellipse();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         ellipse.setLargeurTrait((float)gc.getLineWidth());
         ellipse.setCouleur(couleur);
@@ -54,7 +59,6 @@ public class DessinateurEllipse extends Dessinateur{
     public void definirFormeOnMouseReleased(MouseEvent event) {
         ellipse.setDiametre1((float)Math.abs(event.getX()-ellipse.getX()));
         ellipse.setDiametre2((float)Math.abs(event.getY()-ellipse.getY()));
-
         if(ellipse.getX()>event.getX()){
             ellipse.setX((float)event.getX());
         }

@@ -22,6 +22,7 @@ public class DessinateurLigne extends Dessinateur{
      */
     @Override
     public void dessiner(GraphicsContext gc) {
+        //Pour dessiner nous utilisons la commande initialisé avec la ligne déjà défini
         commande=new DessinerLigne(ligne);
         commande.execute(gc);
     }
@@ -35,7 +36,11 @@ public class DessinateurLigne extends Dessinateur{
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage) {
+        //Pour ne pas se retrouver toujours avec la même référence du carré on fait attention à bien instancié une nouvelle
+        //fois le carré avec rien de défini à l'intérieur
         ligne= new Ligne();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         ligne.setLargeurTrait((float)gc.getLineWidth());
         ligne.setCouleur(couleur);

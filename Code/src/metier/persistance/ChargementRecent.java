@@ -18,6 +18,8 @@ public class ChargementRecent {
      */
     public void charger(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
+        //Si l'utilisateur à supprimer touts les fichiers récent il ne reste plus que 4 caractères dans le fichier
+        //Si c'est le cas il n'y a pas besoin de le lire
         if ((file.length()>4)) {
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));

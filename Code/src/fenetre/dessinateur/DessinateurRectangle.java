@@ -22,6 +22,7 @@ public class DessinateurRectangle extends Dessinateur{
      */
     @Override
     public void dessiner(GraphicsContext gc) {
+        //Pour dessiner nous utilisons la commande initialisé avec le rectangle déjà défini
         commande=new DessinerRectangle(rectangle);
         commande.execute(gc);
     }
@@ -35,7 +36,11 @@ public class DessinateurRectangle extends Dessinateur{
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage) {
+        //Pour ne pas se retrouver toujours avec la même référence du rectangle on fait attention à bien instancié une nouvelle
+        //fois le rectangle avec rien de défini à l'intérieur
         rectangle= new Rectangle();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         rectangle.setLargeurTrait((float)gc.getLineWidth());
         rectangle.setCouleur(couleur);

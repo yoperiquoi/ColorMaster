@@ -21,9 +21,24 @@ public class RecentManager {
      * Liste contenant les fichiers récents
      */
     private ListProperty<Recent> lesFichiers = new SimpleListProperty<>(lesFichiersObs);
-        public ObservableList<Recent> getLesFichiers(){return lesFichiers.get();}
-        public ListProperty<Recent> lesFichiersProperty(){return lesFichiers;}
-        public void setLesFichiers(ObservableList<Recent> lesFichiers){this.lesFichiers.set(lesFichiers);}
+
+    /**
+     * Méthode permettant de récupérer une listes des fichiers
+     * @return la liste observables des fichiers
+     */
+    public ObservableList<Recent> getLesFichiers(){return lesFichiers.get();}
+
+    /**
+     * Méthode permettant de récupérer la liste property de la liste observable
+     * @return la liste property de la liste observable
+     */
+    public ListProperty<Recent> lesFichiersProperty(){return lesFichiers;}
+
+    /**
+     * Méthode permettant de définir les fichiers
+     * @param lesFichiers liste observable des fichiers à définir
+     */
+    public void setLesFichiers(ObservableList<Recent> lesFichiers){this.lesFichiers.set(lesFichiers);}
 
 
     /**

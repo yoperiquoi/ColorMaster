@@ -21,6 +21,7 @@ public class DessinateurCercle extends Dessinateur {
      */
     @Override
     public void dessiner(GraphicsContext gc){
+        //Pour dessiner nous utilisons la commande initialisé avec le cercle déjà défini
         commande= new DessinerCercle(cercle);
         commande.execute(gc);
     }
@@ -34,7 +35,11 @@ public class DessinateurCercle extends Dessinateur {
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage){
+        //Pour ne pas se retrouver toujours avec la même référence du cercle on fait attention à bien instancié une nouvelle
+        //fois le cercle avec rien de défini à l'intérieur
         cercle=new Cercle();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         cercle.setCouleurRemplissage(couleurRemplissage);
         cercle.setCouleur(couleur);
@@ -52,6 +57,7 @@ public class DessinateurCercle extends Dessinateur {
      */
     @Override
     public void definirFormeOnMouseReleased(MouseEvent event){
+        //Formule encore une fois peu précise pour définir le rayon du cercle
         cercle.setRayon((float)(Math.abs(event.getX()-cercle.getX())+Math.abs(event.getY()-cercle.getY()))/2);
         if(cercle.getX()> event.getX()){
             cercle.setX((float)event.getX());

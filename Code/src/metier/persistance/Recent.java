@@ -14,8 +14,23 @@ public class Recent implements Serializable {
      * Propriété de chemin d'accès au fichier
      */
     private final StringProperty fileName = new SimpleStringProperty();
+
+    /**
+     * Méthode permettant de récupérer le String property du nom du fichier
+     * @return String property du nom du fichier
+     */
     public StringProperty fileNameProperty(){return fileName;}
+
+    /**
+     * Méthode permettant de récupérer le nom du fichier
+     * @return nom du fichier
+     */
     public String getFileName(){return fileName.get();}
+
+    /**
+     * Méthode permettant de définir le nom du fichier
+     * @param valeur nom du fichier
+     */
     public void setFileName(String valeur){ fileName.set(valeur);}
 
     /**

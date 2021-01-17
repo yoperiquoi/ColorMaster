@@ -22,6 +22,7 @@ public class DessinateurCarre extends Dessinateur{
      */
     @Override
     public void dessiner(GraphicsContext gc) {
+        //Pour dessiner nous utilisons la commande initialisé avec le carré déjà défini
         commande=new DessinerCarre(carre);
         commande.execute(gc);
     }
@@ -36,7 +37,11 @@ public class DessinateurCarre extends Dessinateur{
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage) {
+        //Pour ne pas se retrouver toujours avec la même référence du carré on fait attention à bien instancié une nouvelle
+        //fois le carré avec rien de défini à l'intérieur
         carre=new Carre();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         carre.setLargeurTrait((float)gc.getLineWidth());
         carre.setCouleur(couleur);
@@ -54,6 +59,7 @@ public class DessinateurCarre extends Dessinateur{
      */
     @Override
     public void definirFormeOnMouseReleased(MouseEvent event) {
+        //Formule pas très précise pour la définition du coté car plutôt limité
         carre.setCote((float)Math.abs(event.getX()-carre.getX()));
         if (event.getX()<carre.getX()){
             carre.setX((float)event.getX());

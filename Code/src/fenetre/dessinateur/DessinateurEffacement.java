@@ -10,6 +10,10 @@ import metier.formes.Effacement;
  * Définition d'un dessinateur permettant de définir l'effacement à dessiner
  */
 public class DessinateurEffacement extends Dessinateur{
+
+    //Cette classe fonctionne comme pour le dessin juste à la place de tracer,
+    //on remplace par du blanc
+
     /**
      * Effacement qui va être défini
      */

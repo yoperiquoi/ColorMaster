@@ -25,7 +25,11 @@ public class DessinateurDessin extends Dessinateur{
      */
     @Override
     public void definirFormeOnMousePressed(MouseEvent event, GraphicsContext gc, Color couleur, Color couleurRemplissage){
+        //Pour ne pas se retrouver toujours avec la même référence du dessin on fait attention à bien instancié une nouvelle
+        //fois le dessin avec rien de défini à l'intérieur
         dessin=new Dessin();
+        //On défini ensuite la couleur du trait, du remplissage, sa largeur, et enfin on récupére les coordonnées
+        //du point de départ de la figure
         gc.setStroke(couleur);
         dessin.setCouleur(couleur);
         dessin.setX((float)event.getX());
@@ -40,7 +44,9 @@ public class DessinateurDessin extends Dessinateur{
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void definirPendantFigure(MouseEvent e,GraphicsContext gc){
+        //A chaque fois qu'on se déplace on ajoute les coordonnée au path du contexte graphique
         gc.lineTo(e.getX(),e.getY());
+        //On ajout ensuite les deux nouvelle coordonnées au dessin pour pouvoir le retracer/effacer en faisant notre propre path
         dessin.pointsY.add((float)e.getY());
         dessin.pointsX.add((float)e.getX());
         gc.stroke();
@@ -53,13 +59,15 @@ public class DessinateurDessin extends Dessinateur{
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
     public void definirFormeOnMouseReleased(MouseEvent e,GraphicsContext gc){
-        commande= new DessinerDessin(dessin);
+        //On ajoute au path du gc les dernières coordonnées
         gc.lineTo(e.getX(),e.getY());
+        //On les ajoute aux tableaux du dessin
         dessin.pointsY.add((float)e.getY());
         dessin.pointsX.add((float)e.getX());
         gc.stroke();
         gc.closePath();
-        DessinerDessin dessinerDessin = new DessinerDessin(dessin);
+        //On instancie la commande permettant de retracer
+        commande= new DessinerDessin(dessin);
     }
 
     /**

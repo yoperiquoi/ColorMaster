@@ -28,7 +28,7 @@ public class Chargement {
     public static Stack<ICommande> charger(String file) throws IllegalArgumentException {
         if (file != null) {
             try {
-
+                //On instancie un deserializer et on enregistre toute les forme à récupérer
                 DessinerDeserializer deserializer = new DessinerDeserializer("type");
                 deserializer.registerShapeType("Carre", DessinerCarre.class);
                 deserializer.registerShapeType("Cercle", DessinerCercle.class);
@@ -39,13 +39,13 @@ public class Chargement {
                 deserializer.registerShapeType("Rectangle", DessinerRectangle.class);
                 deserializer.registerShapeType("Text", DessinerText.class);
 
+                //On instancie ensuite un objet Gson avec notre adapter
                 Gson gson = new GsonBuilder().registerTypeAdapter(ICommande.class, deserializer).create();
 
 
                 if (Files.exists(Paths.get(file))) {
-                    Stack<ICommande> undo = gson.fromJson(new FileReader(file), new TypeToken<Stack<ICommande>>() {
+                    return gson.fromJson(new FileReader(file), new TypeToken<Stack<ICommande>>() {
                     }.getType());
-                    return undo;
                 }
 
             } catch (FileNotFoundException e) {
