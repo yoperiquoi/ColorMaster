@@ -15,7 +15,7 @@ public class DessinerCarre  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Carre";
+    private final String type = "Carre";
 
     /**
      * Constructeur de la commande prenant en paramètre un carre

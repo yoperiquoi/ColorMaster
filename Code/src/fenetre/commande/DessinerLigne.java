@@ -17,7 +17,7 @@ public class DessinerLigne  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Ligne";
+    private final String type = "Ligne";
 
     /**
      * Constructeur de la commande prennant en paramètre une ligne
