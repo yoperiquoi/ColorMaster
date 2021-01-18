@@ -17,7 +17,7 @@ public class DessinerDessin  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Dessin";
+    private final String type = "Dessin";
 
     /**
      * Constructeur de la commande prennant en paramètre un dessin

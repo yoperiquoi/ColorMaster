@@ -18,7 +18,7 @@ public class DessinerText  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Text";
+    private final String type = "Text";
 
     /**
      * Constructeur de la commande prennant en paramètre un text

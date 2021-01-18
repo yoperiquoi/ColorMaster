@@ -18,7 +18,7 @@ public class DessinerRectangle  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Carre";
+    private final String type = "Carre";
 
     /**
      * Constructeur de la commande prennant en paramètre un rectangle

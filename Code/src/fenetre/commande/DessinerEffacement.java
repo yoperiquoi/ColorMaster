@@ -17,7 +17,7 @@ public class DessinerEffacement  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final static String type = "Effacement";
+    private final String type = "Effacement";
 
     /**
      * Constructeur de la commande prennant en paramètre un effacement

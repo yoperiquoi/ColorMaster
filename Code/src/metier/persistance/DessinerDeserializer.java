@@ -33,7 +33,7 @@ public class DessinerDeserializer implements JsonDeserializer<ICommande> {
     public DessinerDeserializer(String formeTypeElementName){
         this.formeTypeElementName= formeTypeElementName;
         this.gson = new Gson();
-        this.formeTypeRegistery= new HashMap<>();
+        this.formeTypeRegistery=new HashMap<>();
     }
 
     /**
