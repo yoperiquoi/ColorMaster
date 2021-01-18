@@ -17,7 +17,7 @@ public class DessinerCercle  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final String type = "Cercle";
+    private final static String type = "Cercle";
 
     /**
      * Construteur permettant de créer la commande avec un cercle prédéfini

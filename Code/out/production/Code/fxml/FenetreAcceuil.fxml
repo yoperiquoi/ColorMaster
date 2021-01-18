@@ -12,7 +12,7 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.171"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fenetre.FenetreAcceuil"
-      prefHeight="1000" prefWidth="1200" styleClass="VBox">
+      prefHeight="1000" prefWidth="1200" styleClass="VBox" alignment="CENTER">
     <AnchorPane prefHeight="1000.0" prefWidth="1200.0">
         <Button layoutX="199.0" layoutY="542.0"  prefHeight="100.0" prefWidth="126.0"
                 text="Nouveau document" fx:id="btnNouveauDoc" styleClass="custom-button" wrapText="true"

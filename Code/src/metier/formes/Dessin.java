@@ -13,11 +13,6 @@ public class Dessin extends Forme{
     float largueurTrait;
 
     /**
-     * Type de la forme pour la persistance
-     */
-    private final String type = "Dessin";
-
-    /**
      * Liste des coordonnées des points en X
      */
     public List<Float> pointsX = new LinkedList<Float>();
@@ -38,13 +33,4 @@ public class Dessin extends Forme{
      * @param largueur largeur du trait
      */
     public void setLargueurTrait(float largueur){largueurTrait=largueur;}
-
-    @Override
-    public String toString() {
-        return "Dessin{" +
-                "largueurTrait=" + largueurTrait +
-                ", pointsX=" + pointsX +
-                ", pointsY=" + pointsY +
-                '}';
-    }
 }

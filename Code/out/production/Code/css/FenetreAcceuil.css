@@ -1,0 +1,19 @@
+.custom-button{
+    -fx-font: 16px "Sérif";
+    -fx-padding: 10;
+    -fx-background: blue;
+    -fx-background-radius:50px;
+    -fx-border-radius: 50px;
+    -fx-border-width: 5px;
+    -fx-border-color: black;
+}
+
+.VBox{
+    -fx-background: lightgrey;
+}
+
+.Titre{
+    -fx-font: 52px "Sérif";
+    -fx-font-weight: bold;
+    -fx-text-shadow: 0.1em,0.1em,#333;
+}

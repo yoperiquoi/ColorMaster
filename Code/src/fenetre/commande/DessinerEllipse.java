@@ -17,7 +17,7 @@ public class DessinerEllipse  implements ICommande {
     /**
      * Type permettant la persistance
      */
-    private final String type = "Ellipse";
+    private final static String type = "Ellipse";
 
     /**
      * Constructeur de la commande prennant en paramètre une ellipse

@@ -51,7 +51,7 @@ public class DessinateurManager {
      */
     DessinateurDessin dessinateurDessin = new DessinateurDessin();
     /**
-     * Dessinateur pour l'effeacement
+     * Dessinateur pour l'effacement
      */
     DessinateurEffacement dessinateurEffacement = new DessinateurEffacement();
 
@@ -137,14 +137,11 @@ public class DessinateurManager {
      * Méthode permettant la définition de la figure lorsque le clic de la souris est relâché
      * @param e événement déclenché par le clic de la souris
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
-     * @param couleur couleur sélectionnée dans le sélecteur de couleur du trait de la figure
-     * @param couleurRemplissage couleur sélectionnée dans le sélecteur de de couleur du remplissage de la figure
-     * @param outils tableau de ToggleButton permettant de récupérer que bouton est enfoncé et ainsi le dessinateur lui correspondant
      * @param dessinBtn bouton du dessin pour vérifier si il est enfoncé
      * @param effacerBtn bouton de l'effacement pour vérifier si il est enfoncé
      * @param textBtn bouton du texte pour vérifier si il est enfoncé
      */
-    public void definirFinFigure(MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn,ToggleButton effacerBtn,ToggleButton textBtn){
+    public void definirFinFigure(MouseEvent e, GraphicsContext gc, ToggleButton dessinBtn,ToggleButton effacerBtn,ToggleButton textBtn){
         if(dessinBtn.isSelected()){
             dessinateurDessin.definirFormeOnMouseReleased(e,gc);
             undoHistorique.push(dessinateurDessin.getCommande());
@@ -210,11 +207,10 @@ public class DessinateurManager {
 
     /**
      * Méthode permettant la sauvegarde de l'image et des historiques lui correspondant
-     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      * @param canvas canvas sur lequel on dessine
      * @param event événement déclenché par l'appui sur le bouton de sauvegarde
      */
-    public void sauvegarder(GraphicsContext gc, Canvas canvas, Event event) {
+    public void sauvegarder( Canvas canvas, Event event) {
         //On utilise un FileChooser pour que l'utilisateur puisse choisir ou enregistrer avec le nom voulu
         FileChooser savefile = new FileChooser();
         savefile.setInitialFileName(fileName.getValue());

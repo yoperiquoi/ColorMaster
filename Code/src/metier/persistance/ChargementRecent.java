@@ -16,7 +16,7 @@ public class ChargementRecent {
      * Méthode permettant de charger les fichiers ouverts récemment
      * @param lesFichiersObs Liste des fichiers
      */
-    public void charger(ObservableList<Recent> lesFichiersObs){
+    public static void charger(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
         //Si l'utilisateur à supprimer touts les fichiers récent il ne reste plus que 4 caractères dans le fichier
         //Si c'est le cas il n'y a pas besoin de le lire

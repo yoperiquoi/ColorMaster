@@ -3,15 +3,11 @@ package metier.persistance;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import fenetre.DessinerDeserializer;
 import fenetre.commande.*;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Stack;
 
 /**

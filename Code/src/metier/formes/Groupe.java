@@ -52,5 +52,6 @@ public class Groupe extends Forme{
         groupe.remove(f);
     }
 
+    public Forme getForme(int x){return groupe.get(x);}
 
 }

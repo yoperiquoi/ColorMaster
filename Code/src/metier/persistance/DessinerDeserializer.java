@@ -1,4 +1,4 @@
-package fenetre;
+package metier.persistance;
 
 import com.google.gson.*;
 import fenetre.commande.ICommande;

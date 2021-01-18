@@ -15,12 +15,12 @@ public class RecentManager {
     /**
      * ObservableList permettant d'afficher la liste des fichiers récent dans la vue
      */
-    private ObservableList<Recent> lesFichiersObs = FXCollections.observableArrayList();
+    private final ObservableList<Recent> lesFichiersObs = FXCollections.observableArrayList();
 
     /**
      * Liste contenant les fichiers récents
      */
-    private ListProperty<Recent> lesFichiers = new SimpleListProperty<>(lesFichiersObs);
+    private final ListProperty<Recent> lesFichiers = new SimpleListProperty<>(lesFichiersObs);
 
     /**
      * Méthode permettant de récupérer une listes des fichiers
@@ -53,16 +53,14 @@ public class RecentManager {
      */
     public void charger(){
         //Charger les fichiers récents
-        ChargementRecent chargementRecent = new ChargementRecent();
-        chargementRecent.charger(lesFichiersObs);
+        ChargementRecent.charger(lesFichiersObs);
     }
 
     /**
      * Assure la sauvegarder dans le fichier recent
      */
     public void sauvegarder(){
-        SauvegardeRecent sauvegardeRecent = new SauvegardeRecent();
-        sauvegardeRecent.sauver(lesFichiersObs);
+        SauvegardeRecent.sauver(lesFichiersObs);
     }
 
     /**

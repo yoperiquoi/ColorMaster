@@ -7,11 +7,6 @@ import javafx.scene.paint.Color;
  */
 public class Rectangle extends Forme{
     /**
-     * Type de la forme pour la persistance
-     */
-    private final String type = "Rectangle";
-
-    /**
      * Longueur du rectangle
      */
     private float longueur;
@@ -22,31 +17,9 @@ public class Rectangle extends Forme{
     private float largeur;
 
     /**
-     * Constructeur avec les propriétés déjà renseigné
-     * @param x coordonnée x du point de départ
-     * @param y coordonnée y du point de départ
-     * @param longueur longueur du rectangle
-     * @param largeur largeur du rectangle
-     * @param rempli si le carré est rempli ou non
-     * @param couleurRemp la couleur du remplissage
-     * @param couleur la couleur du contour du carré
-     */
-    public Rectangle(float longueur, float largeur, float x, float y, boolean rempli, Color couleurRemp,Color couleur) {
-        setLongueur(longueur);
-        setLargeur(largeur);
-        setX(x);
-        setY(y);
-        setRempli(rempli);
-        setCouleur(couleur);
-        setCouleurRemplissage(couleurRemp);
-    }
-
-    /**
      * Constructeur vide permettant une définition plus tard
      */
-    public Rectangle() {
-
-    }
+    public Rectangle() {}
 
     /**
      * Méthode permettant de récupérer la largeur du rectangle

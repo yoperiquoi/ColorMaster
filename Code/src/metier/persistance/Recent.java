@@ -11,6 +11,16 @@ import java.io.Serializable;
  */
 public class Recent implements Serializable {
     /**
+     * Nom du fichier
+     */
+    private String nom;
+
+    /**
+     * Si le fichier est enregistré ou non
+     */
+    private Boolean enregistre;
+
+    /**
      * Propriété de chemin d'accès au fichier
      */
     private final StringProperty fileName = new SimpleStringProperty();
@@ -32,16 +42,6 @@ public class Recent implements Serializable {
      * @param valeur nom du fichier
      */
     public void setFileName(String valeur){ fileName.set(valeur);}
-
-    /**
-     * Nom du fichier
-      */
-    private String nom;
-
-    /**
-     * Si le fichier est enregistré ou non
-     */
-    private Boolean enregistre;
 
     /**
      * Constructeur

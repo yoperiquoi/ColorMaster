@@ -138,17 +138,6 @@ public class FenetrePrincipal {
     @FXML
     private Label labelSlider;
 
-    /**
-     * Label affichant couleur de la ligne
-     */
-    @FXML
-    private Label couleurLigne;
-
-    /**
-     * Label affichant couleur du remplissage
-     */
-    @FXML
-    private Label couleurRempl;
 
     /**
      * Label affichant le nom du fichier
@@ -287,14 +276,14 @@ public class FenetrePrincipal {
 
 
         canvas.setOnMouseDragged(e->{
-            if(!(outils.getSelectedToggle() == null)){
+            if(outils.getSelectedToggle() != null){
             dessinateurManager.definirPendantFigure(dessinBtn,effacerBtn,e,gc);
             }
         });
 
         canvas.setOnMouseReleased(e->{
-            if(!(outils.getSelectedToggle() == null)) {
-                dessinateurManager.definirFinFigure(e, gc, selectionCouleur.getValue(), selectionRempl.getValue(), outils, dessinBtn, effacerBtn,textBtn);
+            if(outils.getSelectedToggle() != null) {
+                dessinateurManager.definirFinFigure(e, gc, dessinBtn, effacerBtn,textBtn);
             }
         });
 
@@ -318,7 +307,7 @@ public class FenetrePrincipal {
         });
 
         saveBtn.setOnAction(e->{
-            dessinateurManager.sauvegarder(gc,canvas,e);
+            dessinateurManager.sauvegarder(canvas,e);
         });
 
         openBtn.setOnAction(e->{
@@ -342,6 +331,7 @@ public class FenetrePrincipal {
             if(recentManager.getLesFichiers().get(recentManager.getLesFichiers().size()-1).getEnregistre()){
                 dessinateurManager.chargerFichier(gc,recentManager);
             }
+
             details.textProperty().bind(Bindings.format("Nom fichier : %s caractères",
                     Bindings.createStringBinding(
                             () -> Integer.toString(dessinateurManager.getFileName().length()), nomFichier.textProperty())));

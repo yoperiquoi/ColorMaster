@@ -7,39 +7,14 @@ import javafx.scene.paint.Color;
  */
 public class Text extends Forme{
     /**
-     * Type de la forme pour la persistance
-     */
-    private final String type = "Text";
-
-    /**
      * Contenu du text
      */
     private String contenu;
 
     /**
-     * Constructeur avec les propriétés déjà renseigné
-     * @param x coordonnée x du point de départ
-     * @param y coordonnée y du point de départ
-     * @param contenu texte
-     * @param rempli si le carré est rempli ou non
-     * @param couleurRemp la couleur du remplissage
-     * @param couleur la couleur du contour du carré
-     */
-    public Text(float x, float y, String contenu, boolean rempli, Color couleurRemp, Color couleur){
-        setX(x);
-        setY(y);
-        setContenu(contenu);
-        setRempli(rempli);
-        setCouleur(couleur);
-        setCouleurRemplissage(couleurRemp);
-    }
-
-    /**
      * Constructeur vide permettant une définition plus tard
      */
-    public Text() {
-
-    }
+    public Text() {}
 
     /**
      * Méthode permettant de récupérer le texte

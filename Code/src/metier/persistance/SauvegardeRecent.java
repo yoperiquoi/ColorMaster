@@ -15,7 +15,7 @@ public class SauvegardeRecent {
      * Méthode permettant de sauvegarder des fichier récemment ouvert
      * @param lesFichiersObs liste des fichiers récemment ouvert
      */
-    public void sauver(ObservableList<Recent> lesFichiersObs){
+    public static void sauver(ObservableList<Recent> lesFichiersObs){
         File file = new File(System.getProperty("user.dir").concat("/recent"));
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));

@@ -7,11 +7,6 @@ import javafx.scene.paint.Color;
  */
 public class Ligne extends Forme{
     /**
-     * Type de la forme pour la persistance
-     */
-    private final String type = "Ligne";
-
-    /**
      * Coordonnées Y d'arrivé de la ligne
      */
     private float y2;
@@ -22,27 +17,9 @@ public class Ligne extends Forme{
     private float x2;
 
     /**
-     * Constructeur avec les propriétés déjà renseigné
-     * @param x coordonnée x du point de départ
-     * @param y coordonnée y du point de départ
-     * @param x2 coordonnée x du point de d'arriver
-     * @param y2 coordonnée y du point de d'arriver
-     * @param couleur la couleur du trait
-     */
-    public Ligne(float x, float y, float x2, float y2, Color couleur){
-        setX(x);
-        setY(y);
-        setX2(x2);
-        setY2(y2);
-        setCouleur(couleur);
-    }
-
-    /**
      * Constructeur vide permettant une définition plus tard
      */
-    public Ligne(){
-
-    }
+    public Ligne(){}
 
     /**
      * Méthode permettant de récupérer le point y d'arrivé de la ligne
@@ -74,14 +51,5 @@ public class Ligne extends Forme{
      */
     public void setX2(float x2) {
         this.x2 = x2;
-    }
-
-    @Override
-    public String toString() {
-        return "Ligne{" +
-                "type='" + type + '\'' +
-                ", y2=" + y2 +
-                ", x2=" + x2 +
-                '}';
     }
 }
