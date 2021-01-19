@@ -237,19 +237,14 @@ public class FenetrePrincipal {
         selectionCouleur.setValue(Color.BLACK);
         selectionRempl.setValue(Color.TRANSPARENT);
 
-        DessinateurCercle dessinateurCercle=new DessinateurCercle();
-        DessinateurCarre dessinateurCarre= new DessinateurCarre();
-        DessinateurEllipse dessinateurEllipse= new DessinateurEllipse();
-        DessinateurRectangle dessinateurRectangle = new DessinateurRectangle();
-        DessinateurLigne dessinateurLigne = new DessinateurLigne();
-        DessinateurText dessinateurText = new DessinateurText();
+        ligneBtn.setUserData(new DessinateurLigne());
+        carreBtn.setUserData(new DessinateurCarre());
+        rectangleBtn.setUserData(new DessinateurRectangle());
+        cercleBtn.setUserData(new DessinateurCercle());
+        ellipseBtn.setUserData(new DessinateurEllipse());
+        textBtn.setUserData(new DessinateurText());
+        dessinBtn.setUserData(new DessinateurDessin());
 
-        ligneBtn.setUserData(dessinateurLigne);
-        carreBtn.setUserData(dessinateurCarre);
-        rectangleBtn.setUserData(dessinateurRectangle);
-        cercleBtn.setUserData(dessinateurCercle);
-        ellipseBtn.setUserData(dessinateurEllipse);
-        textBtn.setUserData(dessinateurText);
 
 
 
@@ -264,7 +259,7 @@ public class FenetrePrincipal {
 
         canvas.setOnMousePressed(e-> {
             if(!(outils.getSelectedToggle() == null)){
-                dessinateurManager.definirDebutFigure(slider,e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,dessinBtn,effacerBtn,textBtn,textArea);
+                dessinateurManager.definirDebutFigure(slider,e,gc,selectionCouleur.getValue(),selectionRempl.getValue(),outils,textBtn,textArea);
             }else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Pas d'outil sélectionné");
@@ -277,13 +272,13 @@ public class FenetrePrincipal {
 
         canvas.setOnMouseDragged(e->{
             if(outils.getSelectedToggle() != null){
-            dessinateurManager.definirPendantFigure(dessinBtn,effacerBtn,e,gc);
+            dessinateurManager.definirPendantFigure(e,gc);
             }
         });
 
         canvas.setOnMouseReleased(e->{
             if(outils.getSelectedToggle() != null) {
-                dessinateurManager.definirFinFigure(e, gc, dessinBtn, effacerBtn,textBtn);
+                dessinateurManager.definirFinFigure(e, gc,textBtn);
             }
         });
 

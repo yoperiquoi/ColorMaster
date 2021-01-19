@@ -71,7 +71,6 @@ public class DessinateurCercle extends Dessinateur {
      * Méthode permettant de récupérer le cercle défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Cercle getForme(){
         return cercle;
     }

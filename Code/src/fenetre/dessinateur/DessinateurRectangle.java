@@ -72,7 +72,6 @@ public class DessinateurRectangle extends Dessinateur{
      * Méthode permettant de récupérer le rectangle défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Forme getForme() {
         return rectangle;
     }

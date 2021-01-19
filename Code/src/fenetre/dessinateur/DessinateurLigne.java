@@ -62,7 +62,6 @@ public class DessinateurLigne extends Dessinateur{
      * Méthode permettant de récupérer la ligne défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Forme getForme() {
         return ligne;
     }

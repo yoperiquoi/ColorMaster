@@ -10,11 +10,7 @@ import metier.formes.Forme;
  * Définition d'un dessinateur pour chaque forme implémenter permettant de définir la forme
  * qui va être dessiné
  */
-public class Dessinateur implements IDessine{
-    /**
-     * Forme à définir dans le dessinateur
-     */
-    private Forme forme;
+public class Dessinateur implements IDessine,IDessineOnMousePressed,IDessineOnMouseReleased{
     /**
      * Commande permettant de dessiner la forme
      */
@@ -47,25 +43,6 @@ public class Dessinateur implements IDessine{
     public void definirFormeOnMouseReleased(MouseEvent event) {
     }
 
-    /**
-     * Méthode permettant de récupérer la forme définie
-     * @return forme défini dans le dessinateur
-     */
-    @Override
-    public Forme getForme() {
-        return forme;
-    }
-
-    /**
-     * Méthode permettant de définir la forme à partir d'une forme déjà existante
-     * @param forme forme déjà défini
-     */
-    public void setForme(Forme forme){ this.forme=forme; }
-
-    /**
-     * Méthode permettant de récupérer la commande correspondant au dessinateur
-     * @return la commande correspondant au dessinateur
-     */
     public ICommande getCommande() {
         return commande;
     }

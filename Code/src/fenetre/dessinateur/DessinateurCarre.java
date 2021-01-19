@@ -10,11 +10,12 @@ import metier.formes.Forme;
 /**
  * Définition d'un dessinateur permettant de définir le carré à dessiner
  */
-public class DessinateurCarre extends Dessinateur{
+public class DessinateurCarre extends Dessinateur {
     /**
      * Carré qui va être défini
      */
     private Carre carre = new Carre();
+
 
     /**
      * Méthode utilisant la commande pour dessiner le carre
@@ -73,7 +74,6 @@ public class DessinateurCarre extends Dessinateur{
      * Méthode permettant de récupérer le carre défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Forme getForme() {
         return carre;
     }

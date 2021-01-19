@@ -71,7 +71,6 @@ public class DessinateurEllipse extends Dessinateur{
      * Méthode permettant de récupérer l'ellipse défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Forme getForme() {
         return ellipse;
     }

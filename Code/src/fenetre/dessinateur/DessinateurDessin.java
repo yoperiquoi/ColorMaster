@@ -10,7 +10,7 @@ import metier.formes.Dessin;
  * Définition d'un dessinateur permettant de définir le dessin à dessiner
  * Cette forme est différente des autre car elle est défini par des tableau de coordonnées x et y
  */
-public class DessinateurDessin extends Dessinateur{
+public class DessinateurDessin extends Dessinateur implements IDessinePendant{
     /**
      * Dessin qui va être défini
      */
@@ -56,14 +56,16 @@ public class DessinateurDessin extends Dessinateur{
     /**
      *  Méthode permettant la définition du carré lorsque le bouton de la souris est relâché
      * @param e événement déclenché par le relâchement du clic de la souris
-     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
-    public void definirFormeOnMouseReleased(MouseEvent e,GraphicsContext gc){
-        //On ajoute au path du gc les dernières coordonnées
-        gc.lineTo(e.getX(),e.getY());
+    public void definirFormeOnMouseReleased(MouseEvent e){
         //On les ajoute aux tableaux du dessin
         dessin.pointsY.add((float)e.getY());
         dessin.pointsX.add((float)e.getX());
+    }
+
+    public void dessiner(GraphicsContext gc){
+        //On ajoute au path du gc les dernières coordonnées
+        gc.lineTo(dessin.pointsX.get(dessin.pointsX.size()-1),dessin.pointsY.get(dessin.pointsY.size()-1));
         gc.stroke();
         gc.closePath();
         //On instancie la commande permettant de retracer
@@ -74,7 +76,6 @@ public class DessinateurDessin extends Dessinateur{
      * Méthode permettant de récupérer le dessin défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Dessin getForme(){
         return dessin;
     }

@@ -1,10 +1,7 @@
 package fenetre;
 
 import fenetre.commande.ICommande;
-import fenetre.dessinateur.Dessinateur;
-import fenetre.dessinateur.DessinateurDessin;
-import fenetre.dessinateur.DessinateurEffacement;
-import fenetre.dessinateur.DessinateurText;
+import fenetre.dessinateur.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
@@ -97,19 +94,13 @@ public class DessinateurManager {
      * @param couleur couleur sélectionnée dans le sélecteur de couleur du trait de la figure
      * @param couleurRemplissage couleur sélectionnée dans le sélecteur de de couleur du remplissage de la figure
      * @param outils tableau de ToggleButton permettant de récupérer que bouton est enfoncé et ainsi le dessinateur lui correspondant
-     * @param dessinBtn bouton du dessin pour vérifier si il est enfoncé
-     * @param effacerBtn bouton de l'effacement pour vérifier si il est enfoncé
      * @param textBtn bouton du texte pour vérifier si il est enfoncé
      * @param textArea textArea nécessaire pour récupérer le texte à dessiner
      */
-    public void definirDebutFigure(Slider slider, MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton dessinBtn, ToggleButton effacerBtn, ToggleButton textBtn, TextArea textArea){
+    public void definirDebutFigure(Slider slider, MouseEvent e, GraphicsContext gc, Color couleur, Color couleurRemplissage, ToggleGroup outils , ToggleButton textBtn, TextArea textArea){
         dessinateur = (Dessinateur) outils.getSelectedToggle().getUserData();
         //La gestion des dessin, effacement et text sont différent car il ne constitue pas de forme "simple"
-        if(dessinBtn.isSelected()){
-            dessinateurDessin.definirFormeOnMousePressed(e,gc,couleur,couleurRemplissage);
-        }else if (effacerBtn.isSelected()) {
-            dessinateurEffacement.definirFormeOnMousePressed(e,gc,couleur,couleurRemplissage);
-        }else if (textBtn.isSelected()){
+        if (textBtn.isSelected()){
             dessinateurText.definirFormeOnMousePressed(slider,e,gc,couleur,couleurRemplissage,textArea);
         }else{
             dessinateur.definirFormeOnMousePressed(e,gc,couleur,couleurRemplissage);
@@ -118,18 +109,14 @@ public class DessinateurManager {
 
     /**
      * Méthode permettant la définition de la figure pendant que l'utilisateur déplace la souris sur le canvas
-     * @param dessinBtn bouton correspondant au dessin
-     * @param effacerBtn bouton correspondant à l'effacement
      * @param e événement déclenché par le déplacement de la souris avec le clic enfoncé
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
-    public void definirPendantFigure (ToggleButton dessinBtn,ToggleButton effacerBtn,MouseEvent e,GraphicsContext gc){
+    public void definirPendantFigure (MouseEvent e,GraphicsContext gc){
         //Seul le dessin et l'effacement sont appelé lors du déplacement de la souris car ce sont des forme particulière
         //du fait qu'elle ne suive pas de formule mathématique
-        if(dessinBtn.isSelected()){
-            dessinateurDessin.definirPendantFigure(e,gc);
-        }else if(effacerBtn.isSelected()) {
-            dessinateurEffacement.definirPendantFigure(e,gc);
+        if(dessinateur instanceof IDessinePendant){
+            ((IDessinePendant) dessinateur).definirPendantFigure(e,gc);
         }
     }
 
@@ -137,18 +124,10 @@ public class DessinateurManager {
      * Méthode permettant la définition de la figure lorsque le clic de la souris est relâché
      * @param e événement déclenché par le clic de la souris
      * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
-     * @param dessinBtn bouton du dessin pour vérifier si il est enfoncé
-     * @param effacerBtn bouton de l'effacement pour vérifier si il est enfoncé
      * @param textBtn bouton du texte pour vérifier si il est enfoncé
      */
-    public void definirFinFigure(MouseEvent e, GraphicsContext gc, ToggleButton dessinBtn,ToggleButton effacerBtn,ToggleButton textBtn){
-        if(dessinBtn.isSelected()){
-            dessinateurDessin.definirFormeOnMouseReleased(e,gc);
-            undoHistorique.push(dessinateurDessin.getCommande());
-        }else if(effacerBtn.isSelected()){
-            dessinateurEffacement.definirFormeOnMouseReleased(e,gc);
-            undoHistorique.push(dessinateurEffacement.getCommande());
-        }else if(textBtn.isSelected()){
+    public void definirFinFigure(MouseEvent e, GraphicsContext gc, ToggleButton textBtn){
+        if(textBtn.isSelected()){
             dessinateurText.dessiner(gc);
             undoHistorique.push(dessinateurText.getCommande());
         }else {

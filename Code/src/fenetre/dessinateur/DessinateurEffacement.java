@@ -53,14 +53,16 @@ public class DessinateurEffacement extends Dessinateur{
     /**
      *  Méthode permettant la définition de l'effacement lorsque le bouton de la souris est relâché
      * @param e événement déclenché par le relâchement du clic de la souris
-     * @param gc contexte graphique du canvas de l'application sur laquelle on dessine
      */
-    public void definirFormeOnMouseReleased(MouseEvent e,GraphicsContext gc){
-        double largueurLigne = gc.getLineWidth();
+    public void definirFormeOnMouseReleased(MouseEvent e){
         effacement.pointsY.add((float)e.getY());
         effacement.pointsX.add((float)e.getX());
+    }
+
+    public void dessiner(GraphicsContext gc){
+        double largueurLigne = gc.getLineWidth();
         gc.setFill(Color.WHITE);
-        gc.fillRect(e.getX() - largueurLigne / 2, e.getY() - largueurLigne / 2, largueurLigne, largueurLigne);
+        gc.fillRect(effacement.pointsX.get(effacement.pointsX.size()-1)- largueurLigne / 2, effacement.pointsY.get(effacement.pointsY.size()-1) - largueurLigne / 2, largueurLigne, largueurLigne);
         commande= new DessinerEffacement(effacement);
     }
 
@@ -68,7 +70,6 @@ public class DessinateurEffacement extends Dessinateur{
      * Méthode permettant de récupérer le dessin défini
      * @return forme défini dans le dessinateur
      */
-    @Override
     public Effacement getForme(){
         return effacement;
     }
