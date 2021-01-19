@@ -11,6 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import metier.formes.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Stack;
 
 /**
@@ -309,12 +314,26 @@ public class FenetrePrincipal {
             dessinateurManager.charger(gc,e);
         });
 
+
+
         //On utilise runLater pour s'assurer que le code s'exécute lorsque la page est chargé au complet comme nous
         //agissons particulièrement sur le titre de la fenêtre avec un binding
         Platform.runLater(()->{
             Stage thisStage = (Stage) grid.getScene().getWindow();
-            RecentManager recentManager = (RecentManager) thisStage.getUserData();
 
+            KeyCombination kc = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+
+            Runnable rn = ()-> dessinateurManager.undo(gc);
+
+            thisStage.getScene().getAccelerators().put(kc, rn);
+
+            kc = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
+
+            rn = ()-> dessinateurManager.redo(gc);
+
+            thisStage.getScene().getAccelerators().put(kc, rn);
+
+            RecentManager recentManager = (RecentManager) thisStage.getUserData();
 
             fileName.textProperty().bindBidirectional(nomFichier.textProperty());
             dessinateurManager.fileNameProperty().bindBidirectional(nomFichier.textProperty());

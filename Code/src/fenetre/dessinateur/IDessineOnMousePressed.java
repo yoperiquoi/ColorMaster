@@ -4,6 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * Interface définissant une forme défini lorsque le clic de la souris est enfoncé
+ */
 public interface IDessineOnMousePressed {
     /**
      * Méthode permettant la définition d'une forme lorsque le bouton de la souris est pressé sur le canvas

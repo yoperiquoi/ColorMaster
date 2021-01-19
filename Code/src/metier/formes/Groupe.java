@@ -52,6 +52,11 @@ public class Groupe extends Forme{
         groupe.remove(f);
     }
 
+    /**
+     * Méthode permettant de récupérer une forme
+     * @param x index de la figure à récupérer
+     * @return la forme voulu
+     */
     public Forme getForme(int x){return groupe.get(x);}
 
 }

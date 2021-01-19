@@ -43,6 +43,10 @@ public class Dessinateur implements IDessine,IDessineOnMousePressed,IDessineOnMo
     public void definirFormeOnMouseReleased(MouseEvent event) {
     }
 
+    /**
+     * Méthode permettant de récupérer la commande du dessinateur
+     * @return la commande
+     */
     public ICommande getCommande() {
         return commande;
     }

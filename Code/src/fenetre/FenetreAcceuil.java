@@ -123,7 +123,8 @@ public class FenetreAcceuil {
                       recentManager.del(recent);
                       recentManager.add(recent);
                       stage.setUserData(recentManager);
-                      stage.setScene(new Scene(root, 1200, 1000));
+                      stage.setResizable(false);
+                      stage.setScene(new Scene(root, 1220, 800));
                       stage.show();
                       ((Node)(e.getSource())).getScene().getWindow().hide();
                   }
@@ -142,7 +143,8 @@ public class FenetreAcceuil {
                     File file = new File(System.getProperty("user.dir").concat("/").concat(fileName.getText()));
                     recentManager.add(new Recent(file.getCanonicalPath(),file.getName(),false));
                     stage.setUserData(recentManager);
-                    stage.setScene(new Scene(root, 1200, 1000));
+                    stage.setResizable(false);
+                    stage.setScene(new Scene(root, 1200, 800));
                     stage.show();
                     ((Node)(e.getSource())).getScene().getWindow().hide();
                 }
