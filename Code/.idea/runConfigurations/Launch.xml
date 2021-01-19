@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Launch" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="launch.Launch" />
+    <module name="Code" />
+    <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_JFX} --add-modules javafx.controls,javafx.fxml,javafx.media " />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
