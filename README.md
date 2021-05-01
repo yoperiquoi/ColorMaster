@@ -1,6 +1,7 @@
 # ColorMaster
 
-Logiciel type "Paint" réalisé à l'aide de Java et JavaFX
+Logiciel type "Paint" réalisé à l'aide de Java et JavaFX réalisé dans le cadre du cours de programmation orienté objet
+avancé de la 2ème année de DUT Informatique de Clermont-Ferrand.
 
 Ce projet réside en la réalisation d'un logiciel de dessin type "Paint" qui permet de dessiner
 avec son curseur ou bien de sélectionner des figures afin de les tracer. J’ai donc réalisé un
